@@ -1,0 +1,164 @@
+[debug] Separate classpath projects and all dependencies start:
+[debug] Separate classpath projects and all dependencies end. Took 2 ms
+[debug] Collect only external dependencies start:
+[debug] Collect only external dependencies end. Took 1 ms
+[debug] Collect excluded jar names start:
+[debug] Collect excluded jar names end. Took 0 ms
+[debug] Filter jars start:
+[debug] Filter jars end. Took 1 ms
+[debug] Collect and shade project classes start:
+[debug] Collect and shade project classes end. Took 0 ms
+[debug] Collect and shade dependency entries start:
+[debug] Collect and shade dependency entries end. Took 7 ms
+[debug] Collect renames start:
+[debug] Collect renames end. Took 62 ms
+[debug] Process renames start:
+[debug] Process renames end. Took 9 ms
+[debug] Collect all merge strategies for cache check start:
+[debug] Collect all merge strategies for cache check end. Took 31 ms
+[debug] Building assembly jar due to missing output...
+[debug] Merge all conflicting jar entries (including those renamed) start:
+[debug] Merge all conflicting jar entries (including those renamed) end. Took 21 ms
+[debug] Report merge results start:
+[info] 4 file(s) merged using strategy 'First' (Run the task at debug level to see the details)
+[debug] 
+[debug] Merge Strategy Used: First
+[debug] Resulting entries:
+[debug]   Jar entry = LICENSE
+[debug] Merge origins:
+[debug]   Jar name = ip4s-core_3-3.6.0.jar, jar org = com.comcast, entry target = LICENSE
+[debug]   Jar name = scala-library-2.13.18.jar, jar org = org.scala-lang, entry target = LICENSE
+[debug] 
+[debug] Merge Strategy Used: First
+[debug] Resulting entries:
+[debug]   Jar entry = NOTICE
+[debug] Merge origins:
+[debug]   Jar name = ip4s-core_3-3.6.0.jar, jar org = com.comcast, entry target = NOTICE
+[debug]   Jar name = scala-library-2.13.18.jar, jar org = org.scala-lang, entry target = NOTICE
+[info] 43 file(s) merged using strategy 'Discard' (Run the task at debug level to see the details)
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = logback-classic-1.5.8.jar, jar org = ch.qos.logback, entry target = META-INF/maven/ch.qos.logback/logback-classic/pom.xml
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = logback-classic-1.5.8.jar, jar org = ch.qos.logback, entry target = module-info.class
+[debug]   Jar name = logback-core-1.5.8.jar, jar org = ch.qos.logback, entry target = module-info.class
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = hpack-1.0.2.jar, jar org = com.twitter, entry target = META-INF/maven/com.twitter/hpack/pom.xml
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = logback-core-1.5.8.jar, jar org = ch.qos.logback, entry target = META-INF/maven/ch.qos.logback/logback-core/pom.properties
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = slf4j-api-2.0.15.jar, jar org = org.slf4j, entry target = META-INF/LICENSE.txt
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = logback-classic-1.5.8.jar, jar org = ch.qos.logback, entry target = META-INF/maven/ch.qos.logback/logback-classic/pom.properties
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = logback-classic-1.5.8.jar, jar org = ch.qos.logback, entry target = META-INF/INDEX.LIST
+[debug]   Jar name = logback-core-1.5.8.jar, jar org = ch.qos.logback, entry target = META-INF/INDEX.LIST
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = cats-effect_3-3.5.7.jar, jar org = org.typelevel, entry target = META-INF/native-image/org.typelevel/cats-effect/native-image.properties
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = slf4j-api-2.0.15.jar, jar org = org.slf4j, entry target = META-INF/maven/org.slf4j/slf4j-api/pom.properties
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = hpack-1.0.2.jar, jar org = com.twitter, entry target = META-INF/maven/com.twitter/hpack/pom.properties
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = logback-classic-1.5.8.jar, jar org = ch.qos.logback, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = logback-core-1.5.8.jar, jar org = ch.qos.logback, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = fs2-core_3-3.11.0.jar, jar org = co.fs2, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = fs2-io_3-3.11.0.jar, jar org = co.fs2, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = ip4s-core_3-3.6.0.jar, jar org = com.comcast, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = hpack-1.0.2.jar, jar org = com.twitter, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = http4s-core_3-0.23.30.jar, jar org = org.http4s, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = http4s-crypto_3-0.2.4.jar, jar org = org.http4s, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = http4s-dsl_3-0.23.30.jar, jar org = org.http4s, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = http4s-ember-core_3-0.23.30.jar, jar org = org.http4s, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = http4s-ember-server_3-0.23.30.jar, jar org = org.http4s, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = http4s-server_3-0.23.30.jar, jar org = org.http4s, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = log4s_3-1.10.0.jar, jar org = org.log4s, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = scala-library-2.13.18.jar, jar org = org.scala-lang, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = scala3-library_3-3.3.8.jar, jar org = org.scala-lang, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = scodec-bits_3-1.1.38.jar, jar org = org.scodec, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = slf4j-api-2.0.15.jar, jar org = org.slf4j, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = case-insensitive_3-1.4.2.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = cats-core_3-2.11.0.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = cats-effect-kernel_3-3.5.7.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = cats-effect-std_3-3.5.7.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = cats-effect_3-3.5.7.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = cats-kernel_3-2.11.0.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = cats-parse_3-1.0.0.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = literally_3-1.1.0.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = log4cats-core_3-2.7.0.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = log4cats-slf4j_3-2.7.0.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug]   Jar name = vault_3-3.6.0.jar, jar org = org.typelevel, entry target = META-INF/MANIFEST.MF
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = logback-core-1.5.8.jar, jar org = ch.qos.logback, entry target = META-INF/maven/ch.qos.logback/logback-core/pom.xml
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = slf4j-api-2.0.15.jar, jar org = org.slf4j, entry target = META-INF/maven/org.slf4j/slf4j-api/pom.xml
+[debug] 
+[debug] Merge Strategy Used: Discard
+[debug] Resulting entries:
+[debug]   None
+[debug] Merge origins:
+[debug]   Jar name = cats-effect_3-3.5.7.jar, jar org = org.typelevel, entry target = META-INF/native-image/org.typelevel/cats-effect/sun-misc-signal-proxy-config.json
+[debug] Report merge results end. Took 7 ms
+[debug] Finding remaining conflicts that were not merged start:
+[debug] Finding remaining conflicts that were not merged end. Took 39 ms
+[debug] Sort/Parallelize merged entries start:
+[debug] Sort/Parallelize merged entries end. Took 15 ms
+[debug] Create jar start:
+[debug] Create jar end. Took 1565 ms
+[debug] Hash newly-built Jar start:
+[debug] Hash newly-built Jar end. Took 19 ms
+[info] Built: /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/productcatalog/target/scala-3.3.8/productcatalog-assembly.jar
+[info] Jar hash: 68af99b0e9fe0fcc7465c1cdb065213658d01010
+[debug] Close library jar references start:
+[debug] Close library jar references end. Took 1 ms

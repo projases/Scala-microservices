@@ -1,0 +1,511 @@
+[debug] Packaging /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/course_3-0.0.1-SNAPSHOT.jar ...
+[debug] Input file mappings:
+[debug] 	application.conf
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/application.conf
+[debug] 	logback.xml
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/logback.xml
+[debug] 	edu
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu
+[debug] 	edu/uoc
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc
+[debug] 	edu/uoc/epcsd
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd
+[debug] 	edu/uoc/epcsd/course
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course
+[debug] 	edu/uoc/epcsd/course/infrastructure
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure
+[debug] 	edu/uoc/epcsd/course/infrastructure/user
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/user
+[debug] 	edu/uoc/epcsd/course/infrastructure/user/UserClient.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/user/UserClient.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/user/UserClient.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/user/UserClient.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/user/GetUserResponse$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/user/GetUserResponse$.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/user/GetUserResponse.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/user/GetUserResponse.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/user/GetUserResponse.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/user/GetUserResponse.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/repository
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/repository
+[debug] 	edu/uoc/epcsd/course/infrastructure/repository/DoobieCourseRepository.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/repository/DoobieCourseRepository.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/repository/DoobieMappings.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/repository/DoobieMappings.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/repository/DoobieEnrollmentRepository.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/repository/DoobieEnrollmentRepository.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/repository/DoobieCourseRepository.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/repository/DoobieCourseRepository.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/repository/DoobieMappings$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/repository/DoobieMappings$.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/repository/DoobieEnrollmentRepository.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/repository/DoobieEnrollmentRepository.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/repository/DoobieMappings.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/repository/DoobieMappings.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/Retry$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/Retry$.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/Retry.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/Retry.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/Retry.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/Retry.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/microcredential
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/microcredential
+[debug] 	edu/uoc/epcsd/course/infrastructure/microcredential/MicrocredentialClient.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/microcredential/MicrocredentialClient.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/microcredential/MicrocredentialClient.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/microcredential/MicrocredentialClient.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/events
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/NoopCourseEventPublisher.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/NoopCourseEventPublisher.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/RabbitCourseEventPublisher.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/RabbitCourseEventPublisher.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/RabbitCourseEventPublisher$RabbitCourseEventPublisher.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/RabbitCourseEventPublisher$RabbitCourseEventPublisher.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/CourseClosedConsumer.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/CourseClosedConsumer.tasty
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/NoopCourseEventPublisher$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/NoopCourseEventPublisher$.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/NoopCourseEventPublisher.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/NoopCourseEventPublisher.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/NoopCourseEventPublisher$$anon$1.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/NoopCourseEventPublisher$$anon$1.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/CourseClosedConsumer.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/CourseClosedConsumer.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/RabbitCourseEventPublisher$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/RabbitCourseEventPublisher$.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/CourseClosedConsumer$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/CourseClosedConsumer$.class
+[debug] 	edu/uoc/epcsd/course/infrastructure/events/RabbitCourseEventPublisher.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/infrastructure/events/RabbitCourseEventPublisher.class
+[debug] 	edu/uoc/epcsd/course/config
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config
+[debug] 	edu/uoc/epcsd/course/config/AppConfig$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/AppConfig$.class
+[debug] 	edu/uoc/epcsd/course/config/RabbitConfig.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/RabbitConfig.tasty
+[debug] 	edu/uoc/epcsd/course/config/DatabaseConfig$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/DatabaseConfig$.class
+[debug] 	edu/uoc/epcsd/course/config/DatabaseConfig.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/DatabaseConfig.class
+[debug] 	edu/uoc/epcsd/course/config/RabbitConfig.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/RabbitConfig.class
+[debug] 	edu/uoc/epcsd/course/config/MicrocredentialServiceConfig$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/MicrocredentialServiceConfig$.class
+[debug] 	edu/uoc/epcsd/course/config/AppConfig.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/AppConfig.class
+[debug] 	edu/uoc/epcsd/course/config/UserServiceConfig$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/UserServiceConfig$.class
+[debug] 	edu/uoc/epcsd/course/config/DatabaseConfig.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/DatabaseConfig.tasty
+[debug] 	edu/uoc/epcsd/course/config/RetryConfig.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/RetryConfig.class
+[debug] 	edu/uoc/epcsd/course/config/RabbitConfig$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/RabbitConfig$.class
+[debug] 	edu/uoc/epcsd/course/config/RetryConfig.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/RetryConfig.tasty
+[debug] 	edu/uoc/epcsd/course/config/MicrocredentialServiceConfig.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/MicrocredentialServiceConfig.class
+[debug] 	edu/uoc/epcsd/course/config/MicrocredentialServiceConfig.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/MicrocredentialServiceConfig.tasty
+[debug] 	edu/uoc/epcsd/course/config/ServerConfig.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/ServerConfig.class
+[debug] 	edu/uoc/epcsd/course/config/UserServiceConfig.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/UserServiceConfig.tasty
+[debug] 	edu/uoc/epcsd/course/config/ServerConfig.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/ServerConfig.tasty
+[debug] 	edu/uoc/epcsd/course/config/AppConfig.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/AppConfig.tasty
+[debug] 	edu/uoc/epcsd/course/config/UserServiceConfig.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/UserServiceConfig.class
+[debug] 	edu/uoc/epcsd/course/config/RetryConfig$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/RetryConfig$.class
+[debug] 	edu/uoc/epcsd/course/config/ServerConfig$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/config/ServerConfig$.class
+[debug] 	edu/uoc/epcsd/course/Main.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/Main.class
+[debug] 	edu/uoc/epcsd/course/http
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$14.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$14.class
+[debug] 	edu/uoc/epcsd/course/http/CourseRequest.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/CourseRequest.class
+[debug] 	edu/uoc/epcsd/course/http/ApiDocs$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/ApiDocs$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$19.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$19.class
+[debug] 	edu/uoc/epcsd/course/http/OpenEnrollmentRequest$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/OpenEnrollmentRequest$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$11.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$11.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$27.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$27.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$28.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$28.class
+[debug] 	edu/uoc/epcsd/course/http/UserEmail.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/UserEmail.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$ApiError$BadRequest$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$ApiError$BadRequest$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$20.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$20.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$4.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$4.class
+[debug] 	edu/uoc/epcsd/course/http/CourseRequest.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/CourseRequest.tasty
+[debug] 	edu/uoc/epcsd/course/http/ApiDocs.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/ApiDocs.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$9.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$9.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$68.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$68.class
+[debug] 	edu/uoc/epcsd/course/http/Dtos$package.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Dtos$package.tasty
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$40.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$40.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$61.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$61.class
+[debug] 	edu/uoc/epcsd/course/http/OpenEnrollmentRequest.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/OpenEnrollmentRequest.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$49.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$49.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$17.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$17.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$3.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$3.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$69.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$69.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$43.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$43.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$13.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$13.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$45.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$45.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$10.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$10.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$70.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$70.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$66.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$66.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$12.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$12.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$46.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$46.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$29.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$29.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$34.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$34.class
+[debug] 	edu/uoc/epcsd/course/http/Dtos$package$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Dtos$package$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$24.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$24.class
+[debug] 	edu/uoc/epcsd/course/http/UserEmail.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/UserEmail.tasty
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$44.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$44.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$36.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$36.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$47.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$47.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$62.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$62.class
+[debug] 	edu/uoc/epcsd/course/http/ApiDocs.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/ApiDocs.tasty
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$41.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$41.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$ApiError.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$ApiError.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$60.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$60.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$56.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$56.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$7.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$7.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$42.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$42.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$78.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$78.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$ApiError$NotFound.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$ApiError$NotFound.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$64.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$64.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$6.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$6.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$75.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$75.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$77.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$77.class
+[debug] 	edu/uoc/epcsd/course/http/ApiDocsGen.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/ApiDocsGen.tasty
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$2.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$2.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$38.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$38.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$16.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$16.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$22.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$22.class
+[debug] 	edu/uoc/epcsd/course/http/ApiDocsGen$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/ApiDocsGen$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$8.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$8.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$35.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$35.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$54.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$54.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$50.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$50.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$48.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$48.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$21.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$21.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$59.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$59.class
+[debug] 	edu/uoc/epcsd/course/http/OpenEnrollmentRequest.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/OpenEnrollmentRequest.tasty
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$71.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$71.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$39.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$39.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$26.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$26.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$67.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$67.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$ApiError$BadGateway$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$ApiError$BadGateway$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$72.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$72.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$ApiError$BadGateway.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$ApiError$BadGateway.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$37.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$37.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$32.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$32.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$52.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$52.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$25.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$25.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$33.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$33.class
+[debug] 	edu/uoc/epcsd/course/http/Routes.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes.tasty
+[debug] 	edu/uoc/epcsd/course/http/ErrorHandler.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/ErrorHandler.class
+[debug] 	edu/uoc/epcsd/course/http/ErrorHandler$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/ErrorHandler$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$1.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$1.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$53.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$53.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$73.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$73.class
+[debug] 	edu/uoc/epcsd/course/http/Dtos$package.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Dtos$package.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$30.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$30.class
+[debug] 	edu/uoc/epcsd/course/http/CourseRequest$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/CourseRequest$.class
+[debug] 	edu/uoc/epcsd/course/http/ApiDocsGen.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/ApiDocsGen.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$76.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$76.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$15.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$15.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$31.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$31.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$57.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$57.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$55.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$55.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$58.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$58.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$5.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$5.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$ApiError$NotFound$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$ApiError$NotFound$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$63.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$63.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$ApiError$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$ApiError$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$23.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$23.class
+[debug] 	edu/uoc/epcsd/course/http/ErrorHandler.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/ErrorHandler.tasty
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$51.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$51.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$18.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$18.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$ApiError$BadRequest.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$ApiError$BadRequest.class
+[debug] 	edu/uoc/epcsd/course/http/UserEmail$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/UserEmail$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$74.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$74.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$$anon$65.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$$anon$65.class
+[debug] 	edu/uoc/epcsd/course/http/Routes$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes$.class
+[debug] 	edu/uoc/epcsd/course/http/Routes.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/http/Routes.class
+[debug] 	edu/uoc/epcsd/course/service
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/service
+[debug] 	edu/uoc/epcsd/course/service/CreateCourse.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/service/CreateCourse.class
+[debug] 	edu/uoc/epcsd/course/service/CreateCourse.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/service/CreateCourse.tasty
+[debug] 	edu/uoc/epcsd/course/service/CourseService.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/service/CourseService.class
+[debug] 	edu/uoc/epcsd/course/service/CourseRequestUpdate.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/service/CourseRequestUpdate.class
+[debug] 	edu/uoc/epcsd/course/service/CourseRequestUpdate$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/service/CourseRequestUpdate$.class
+[debug] 	edu/uoc/epcsd/course/service/CourseRequestUpdate.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/service/CourseRequestUpdate.tasty
+[debug] 	edu/uoc/epcsd/course/service/CreateCourse$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/service/CreateCourse$.class
+[debug] 	edu/uoc/epcsd/course/service/CourseService.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/service/CourseService.tasty
+[debug] 	edu/uoc/epcsd/course/Main.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/Main.tasty
+[debug] 	edu/uoc/epcsd/course/Main$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/Main$.class
+[debug] 	edu/uoc/epcsd/course/domain
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain
+[debug] 	edu/uoc/epcsd/course/domain/UserType$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/UserType$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseStatus.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseStatus.tasty
+[debug] 	edu/uoc/epcsd/course/domain/User$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/User$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseRepository.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseRepository.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$EnrollmentNotFound.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$EnrollmentNotFound.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$UserNotFound$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$UserNotFound$.class
+[debug] 	edu/uoc/epcsd/course/domain/Course.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Course.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$EnrollmentsNotGraded$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$EnrollmentsNotGraded$.class
+[debug] 	edu/uoc/epcsd/course/domain/UserType.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/UserType.tasty
+[debug] 	edu/uoc/epcsd/course/domain/Enrollment.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Enrollment.class
+[debug] 	edu/uoc/epcsd/course/domain/UserService.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/UserService.class
+[debug] 	edu/uoc/epcsd/course/domain/MicrocredentialService.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/MicrocredentialService.class
+[debug] 	edu/uoc/epcsd/course/domain/UserType$$anon$3.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/UserType$$anon$3.class
+[debug] 	edu/uoc/epcsd/course/domain/Algebra$package$Eff$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Algebra$package$Eff$.class
+[debug] 	edu/uoc/epcsd/course/domain/UserService.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/UserService.tasty
+[debug] 	edu/uoc/epcsd/course/domain/User.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/User.class
+[debug] 	edu/uoc/epcsd/course/domain/Enrollment.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Enrollment.tasty
+[debug] 	edu/uoc/epcsd/course/domain/Course.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Course.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$MicrocredentialServiceUnavailable$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$MicrocredentialServiceUnavailable$.class
+[debug] 	edu/uoc/epcsd/course/domain/Algebra$package.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Algebra$package.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$CourseNotFound.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$CourseNotFound.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$.class
+[debug] 	edu/uoc/epcsd/course/domain/Algebra$package.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Algebra$package.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$InvalidEnrollmentDates$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$InvalidEnrollmentDates$.class
+[debug] 	edu/uoc/epcsd/course/domain/Codecs.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Codecs.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$MicrocredentialServiceUnavailable.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$MicrocredentialServiceUnavailable.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseEventPublisher.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseEventPublisher.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$InvalidState.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$InvalidState.class
+[debug] 	edu/uoc/epcsd/course/domain/Codecs$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Codecs$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$UserNotFound.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$UserNotFound.class
+[debug] 	edu/uoc/epcsd/course/domain/Course$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Course$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$InvalidEnrollmentDates.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$InvalidEnrollmentDates.class
+[debug] 	edu/uoc/epcsd/course/domain/Algebra$package$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Algebra$package$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseClosed$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseClosed$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$EnrollmentsNotGraded.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$EnrollmentsNotGraded.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$UserServiceUnavailable$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$UserServiceUnavailable$.class
+[debug] 	edu/uoc/epcsd/course/domain/EnrollmentStatus$$anon$2.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/EnrollmentStatus$$anon$2.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseClosed.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseClosed.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseError.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError.class
+[debug] 	edu/uoc/epcsd/course/domain/EnrollmentStatus.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/EnrollmentStatus.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseStatus$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseStatus$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$DuplicateCourseTitle.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$DuplicateCourseTitle.class
+[debug] 	edu/uoc/epcsd/course/domain/User.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/User.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseRepository.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseRepository.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$CourseNotFound$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$CourseNotFound$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$EnrollmentNotFound$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$EnrollmentNotFound$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseEventPublisher.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseEventPublisher.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$InstructorNotFound$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$InstructorNotFound$.class
+[debug] 	edu/uoc/epcsd/course/domain/EnrollmentRepository.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/EnrollmentRepository.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseStatus$$anon$1.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseStatus$$anon$1.class
+[debug] 	edu/uoc/epcsd/course/domain/MicrocredentialService.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/MicrocredentialService.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseClosed.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseClosed.class
+[debug] 	edu/uoc/epcsd/course/domain/UserType.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/UserType.class
+[debug] 	edu/uoc/epcsd/course/domain/EnrollmentStatus.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/EnrollmentStatus.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$InvalidState$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$InvalidState$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError.tasty
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$InstructorNotFound.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$InstructorNotFound.class
+[debug] 	edu/uoc/epcsd/course/domain/Enrollment$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Enrollment$.class
+[debug] 	edu/uoc/epcsd/course/domain/EnrollmentStatus$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/EnrollmentStatus$.class
+[debug] 	edu/uoc/epcsd/course/domain/Codecs.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/Codecs.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseStatus.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseStatus.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$DuplicateCourseTitle$.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$DuplicateCourseTitle$.class
+[debug] 	edu/uoc/epcsd/course/domain/CourseError$UserServiceUnavailable.class
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/CourseError$UserServiceUnavailable.class
+[debug] 	edu/uoc/epcsd/course/domain/EnrollmentRepository.tasty
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/edu/uoc/epcsd/course/domain/EnrollmentRepository.tasty
+[debug] 	db
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/db
+[debug] 	db/migration
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/db/migration
+[debug] 	db/migration/V2__create_enrollment.sql
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/db/migration/V2__create_enrollment.sql
+[debug] 	db/migration/V3__seed.sql
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/db/migration/V3__seed.sql
+[debug] 	db/migration/V1__create_course.sql
+[debug] 	  /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/target/scala-3.3.8/classes/db/migration/V1__create_course.sql
+[debug] Done packaging.

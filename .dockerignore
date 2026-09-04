@@ -1,0 +1,10 @@
+target/
+modules/*/target/
+project/target/
+project/project/
+.bsp/
+.idea/
+.bloop/
+.metals/
+.vscode/
+*.log

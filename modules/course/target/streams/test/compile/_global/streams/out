@@ -1,0 +1,5 @@
+[warn] -- [E198] Unused Symbol Warning: /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/course/src/test/scala/edu/uoc/epcsd/course/infrastructure/microcredential/MicrocredentialClientSuite.scala:10:35 
+[warn] 10 |import edu.uoc.epcsd.course.domain.*
+[warn]    |                                   ^
+[warn]    |                                   unused import
+[warn] one warning found

@@ -1,0 +1,6 @@
+[debug] [zinc] IncrementalCompile -----------
+[debug] IncrementalCompile.incrementalCompile
+[debug] previous = Stamps for: 12 products, 1 sources, 7 libraries
+[debug] current source = Set(${BASE}/modules/microcredential/src/test/scala/edu/uoc/epcsd/microcredential/service/MicrocredentialServiceSuite.scala)
+[debug] > initialChanges = InitialChanges(Changes(added = Set(), removed = Set(), changed = Set(), unmodified = ...),Set(),Set(),API Changes: Set())
+[debug] No changes

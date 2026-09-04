@@ -1,0 +1,7 @@
+#Successful Tests
+#Fri Sep 04 10:06:09 CEST 2026
+edu.uoc.epcsd.course.domain.CourseClosedCodecSuite=1788509168193
+edu.uoc.epcsd.course.domain.EnumWireFormatSuite=1788509168157
+edu.uoc.epcsd.course.infrastructure.events.RabbitEventFlowSuite=1788509168740
+edu.uoc.epcsd.course.infrastructure.microcredential.MicrocredentialClientSuite=1788509169240
+edu.uoc.epcsd.course.service.CourseServiceSuite=1788509168781

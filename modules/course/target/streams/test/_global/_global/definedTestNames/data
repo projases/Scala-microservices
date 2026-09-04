@@ -1,0 +1,1 @@
+["edu.uoc.epcsd.course.domain.EnumWireFormatSuite","edu.uoc.epcsd.course.domain.CourseClosedCodecSuite","edu.uoc.epcsd.course.infrastructure.events.RabbitEventFlowSuite","edu.uoc.epcsd.course.service.CourseServiceSuite","edu.uoc.epcsd.course.infrastructure.microcredential.MicrocredentialClientSuite"]

@@ -1,0 +1,98 @@
+# Unified runnable deployment for the functional Scala microservices portfolio demo.
+#
+# Brings up, in one command:
+#   - RabbitMQ        (async event bus, replaces the legacy Kafka leg)
+#   - PostgreSQL      (one database per service: course, users, credential)
+#   - course          (scala, :18084)
+#   - user            (scala, :18082)
+#   - microcredential (scala, :18085)
+#   - productcatalog  (scala stub, :18081)  — validates POST /alerts product ids
+#
+#   docker compose up --build
+#
+# Each Scala service is built from a multi-stage Dockerfile that runs `sbt <module>/assembly`
+# and shells the resulting fat jar against a Docker-aware config in docker/<module>.conf.
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: scala-course-postgres
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo
+    volumes:
+      - ./docker/postgres-init.sh:/docker-entrypoint-initdb.d/10-create-databases.sh:ro
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "54329:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U demo -d demo"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: scala-course-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"    # AMQP 
+      - "15672:15672"  # management UI (guest/guest)
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  course:
+    build:
+      context: .
+      dockerfile: modules/course/Dockerfile
+    container_name: scala-course-course
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "18084:18084"
+
+  productcatalog:
+    build:
+      context: .
+      dockerfile: modules/productcatalog/Dockerfile
+    container_name: scala-course-productcatalog
+    ports:
+      - "18081:18081"
+
+  user:
+    build:
+      context: .
+      dockerfile: modules/user/Dockerfile
+    container_name: scala-course-user
+    depends_on:
+      postgres:
+        condition: service_healthy
+      productcatalog:
+        condition: service_started
+    ports:
+      - "18082:18082"
+
+  microcredential:
+    build:
+      context: .
+      dockerfile: modules/microcredential/Dockerfile
+    container_name: scala-course-microcredential
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "18085:18085"
+
+volumes:
+  postgres-data:

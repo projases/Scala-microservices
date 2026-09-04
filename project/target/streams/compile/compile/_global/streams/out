@@ -1,0 +1,16 @@
+[error] /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/Dependencies.scala:19:53: catsEffect is already defined as value catsEffect
+[error]   val catsEffect = "org.typelevel" %% "cats-effect" % catsEffect
+[error]                                                     ^
+[error] /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/Dependencies.scala:38:65: pureconfig is already defined as value pureconfig
+[error]   val pureconfig = "com.github.pureconfig" %% "pureconfig-core" % pureconfig
+[error]                                                                 ^
+[error] /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/Dependencies.scala:43:71: munit is already defined as value munit
+[error]   val munit         = "org.scalameta" %% "munit"           % munit    % Test
+[error]                                                                       ^
+[error] /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/Dependencies.scala:44:73: munitCE3 is already defined as value munitCE3
+[error]   val munitCE3      = "org.typelevel" %% "munit-cats-effect" % munitCE3 % Test
+[error]                                                                         ^
+[error] /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/Dependencies.scala:45:73: scalacheck is already defined as value scalacheck
+[error]   val scalacheck    = "org.scalacheck" %% "scalacheck"     % scalacheck % Test
+[error]                                                                         ^
+[error] 5 errors found
