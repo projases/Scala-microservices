@@ -1,2 +1,20 @@
 Gemini/
 SPECIFICATION.md
+
+# build artifacts
+target/
+modules/*/target/
+project/target/
+project/project/
+.bsp/
+.bloop/
+.metals/
+.idea/
+.vscode/
+*.log
+
+# packaged artifacts — never commit jars/zips
+*.jar
+*.zip
+
+.DS_Store
