@@ -16,7 +16,7 @@ RUN sbt -batch -no-colors "notification/assembly"
 # Run stage: a slim JRE plus the fat jar and the Docker-aware config.
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /build/modules/notification/target/scala-3.3.8/notification-assembly.jar app.jar
+COPY --from=build /build/modules/notification/target/scala-3.9.0/notification-assembly.jar app.jar
 COPY docker/notification.conf application.conf
 EXPOSE 18083
 ENTRYPOINT ["java", "-Dconfig.file=/app/application.conf", "-jar", "/app/app.jar"]

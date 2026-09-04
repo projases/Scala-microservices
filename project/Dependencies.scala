@@ -1,12 +1,12 @@
 import sbt._
 
 object Dependencies {
-  val scala3 = "3.3.8"
+  val scala3 = "3.9.0"
 
-  private val catsEffectV = "3.5.7"
+  private val catsEffectV = "3.7.1"
   private val catsV       = "2.12.0"
-  private val http4sV     = "0.23.30"
-  private val circeV      = "0.14.10"
+  private val http4sV     = "0.23.36"
+  private val circeV      = "0.14.16"
   private val doobieV     = "1.0.0-RC5"
   private val fs2RabbitV  = "5.5.3"
   private val flywayV     = "11.3.3"
@@ -44,9 +44,10 @@ object Dependencies {
   val log4catsSlf4j  = "org.typelevel" %% "log4cats-slf4j"  % "2.7.0"
   val logbackClassic = "ch.qos.logback" % "logback-classic" % "1.5.8"
 
-  // Aligned with the project's circa-mid-2024 stack (cats-effect 3.5.x, http4s 0.23.30,
-  // circe 0.14.10, Scala 3.3.8) so eviction keeps the dependency set stable.
-  private val tapirV               = "1.10.15"
+  // Scala 3.9 LTS (current LTS baseline, requires JDK 17+); project runs on JDK 21.
+  // Dependency stack refreshed for the 3.9 LTS keep-up-to-date pass
+  // (cats-effect 3.7.1, http4s 0.23.36, circe 0.14.16, tapir 1.13.26).
+  private val tapirV               = "1.13.26"
   private val tapirServer         = "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % tapirV
   private val tapirCirce          = "com.softwaremill.sttp.tapir" %% "tapir-json-circe"    % tapirV
   private val tapirOpenapiDocs    = "com.softwaremill.sttp.tapir" %% "tapir-openapi-docs"    % tapirV

@@ -31,8 +31,20 @@ object Main extends IOApp.Simple:
   /** ids considered to exist in the catalog */
   private val existingProductIds: Set[Long] = Set(1L, 2L, 3L, 10L, 11L, 12L, 20L, 100L, 101L, 102L)
 
+  private val openApiJson: IO[String] =
+    IO.blocking {
+      Option(getClass.getResourceAsStream("/openapi.json"))
+        .fold(throw new RuntimeException("missing classpath resource /openapi.json")) { stream =>
+          try new String(stream.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8)
+          finally stream.close()
+        }
+    }
+
   private def routes(publisher: ProductEventPublisher[IO]): HttpRoutes[IO] =
     HttpRoutes.of[IO] {
+      case GET -> Root / "v3" / "api-docs" =>
+        openApiJson.flatMap(Ok(_))
+
       case GET -> Root / "products" / LongVar(id) =>
         if existingProductIds.contains(id) then Ok(s"""{"id":$id,"name":"Stub Product $id"}""")
         else NotFound(s"""{"message":"Product $id not found"}""")

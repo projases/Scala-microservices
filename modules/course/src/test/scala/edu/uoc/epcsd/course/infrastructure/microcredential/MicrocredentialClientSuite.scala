@@ -7,7 +7,6 @@ import org.http4s.{Response, Status, Request}
 import org.http4s.client.Client
 
 import edu.uoc.epcsd.course.config.RetryConfig
-import edu.uoc.epcsd.course.domain.*
 import edu.uoc.epcsd.course.domain.CourseError.MicrocredentialServiceUnavailable
 
 /** Verifies the retry policy lives in the client: 5xx twice then success => 3 attempts. */

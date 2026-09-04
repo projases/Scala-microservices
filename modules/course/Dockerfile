@@ -16,7 +16,7 @@ RUN sbt -batch -no-colors "course/assembly"
 # Run stage: a slim JRE plus the fat jar and the Docker-aware config.
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /build/modules/course/target/scala-3.3.8/course-assembly.jar app.jar
+COPY --from=build /build/modules/course/target/scala-3.9.0/course-assembly.jar app.jar
 COPY docker/course.conf application.conf
 EXPOSE 18084
 ENTRYPOINT ["java", "-Dconfig.file=/app/application.conf", "-jar", "/app/app.jar"]
