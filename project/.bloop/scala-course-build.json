@@ -2,16 +2,16 @@
     "version": "1.4.0",
     "project": {
         "name": "scala-course-build",
-        "directory": "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project",
-        "workspaceDir": "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project",
+        "directory": "/home/pablo/Documents/Dev/Scala/scala-course/project",
+        "workspaceDir": "/home/pablo/Documents/Dev/Scala/scala-course/project",
         "sources": [
-            "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/src/main/scala",
-            "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/src/main/scala-2.12",
-            "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/src/main/scala-2",
-            "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/src/main/java",
-            "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/src/main/scala-sbt-1.0",
-            "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/target/scala-2.12/sbt-1.0/src_managed/main",
-            "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/Dependencies.scala"
+            "/home/pablo/Documents/Dev/Scala/scala-course/project/src/main/scala",
+            "/home/pablo/Documents/Dev/Scala/scala-course/project/src/main/scala-2.12",
+            "/home/pablo/Documents/Dev/Scala/scala-course/project/src/main/scala-2",
+            "/home/pablo/Documents/Dev/Scala/scala-course/project/src/main/java",
+            "/home/pablo/Documents/Dev/Scala/scala-course/project/src/main/scala-sbt-1.0",
+            "/home/pablo/Documents/Dev/Scala/scala-course/project/target/scala-2.12/sbt-1.0/src_managed/main",
+            "/home/pablo/Documents/Dev/Scala/scala-course/project/Dependencies.scala"
         ],
         "dependencies": [
             
@@ -112,11 +112,11 @@
             "/home/pablo/.cache/coursier/v1/https/repo1.maven.org/maven2/net/java/dev/jna/jna-platform/5.12.0/jna-platform-5.12.0.jar",
             "/home/pablo/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/config/1.4.5/config-1.4.5.jar"
         ],
-        "out": "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/.bloop/scala-course-build",
-        "classesDir": "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/.bloop/scala-course-build/scala-2.12/sbt-1.0/classes",
+        "out": "/home/pablo/Documents/Dev/Scala/scala-course/project/.bloop/scala-course-build",
+        "classesDir": "/home/pablo/Documents/Dev/Scala/scala-course/project/.bloop/scala-course-build/scala-2.12/sbt-1.0/classes",
         "resources": [
-            "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/src/main/resources",
-            "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/target/scala-2.12/sbt-1.0/resource_managed/main"
+            "/home/pablo/Documents/Dev/Scala/scala-course/project/src/main/resources",
+            "/home/pablo/Documents/Dev/Scala/scala-course/project/target/scala-2.12/sbt-1.0/resource_managed/main"
         ],
         "scala": {
             "organization": "org.scala-lang",
@@ -223,7 +223,7 @@
             "config": {
                 "home": "/nix/store/vs2j17dr25ph3h1k4w1ngxnn8y5br1sa-openjdk-21.0.12+2/lib/openjdk",
                 "options": [
-                    "-Duser.dir=/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project"
+                    "-Duser.dir=/home/pablo/Documents/Dev/Scala/scala-course/project"
                 ]
             },
             "mainClass": [
@@ -232,11 +232,11 @@
             "runtimeConfig": {
                 "home": "/nix/store/vs2j17dr25ph3h1k4w1ngxnn8y5br1sa-openjdk-21.0.12+2/lib/openjdk",
                 "options": [
-                    "-Duser.dir=/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project"
+                    "-Duser.dir=/home/pablo/Documents/Dev/Scala/scala-course/project"
                 ]
             },
             "classpath": [
-                "/home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/project/.bloop/scala-course-build/scala-2.12/sbt-1.0/classes",
+                "/home/pablo/Documents/Dev/Scala/scala-course/project/.bloop/scala-course-build/scala-2.12/sbt-1.0/classes",
                 "/home/pablo/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/sbt-bloop_2.12_1.0/2.0.19/sbt-bloop_2.12_1.0-2.0.19.jar",
                 "/home/pablo/.cache/coursier/v1/https/repo1.maven.org/maven2/com/eed3si9n/sbt-assembly_2.12_1.0/2.3.1/sbt-assembly_2.12_1.0-2.3.1.jar",
                 "/home/pablo/.cache/coursier/v1/https/repo1.maven.org/maven2/ch/epfl/scala/bloop-config_2.12/2.3.3/bloop-config_2.12-2.3.3.jar",

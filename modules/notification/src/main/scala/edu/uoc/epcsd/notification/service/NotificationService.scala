@@ -21,6 +21,7 @@ trait NotificationService[F[_]]:
   def notifyCredentialRejected(msg: MicrocredentialMessage): F[Unit]
 
 object NotificationService:
+    // explain what does apply do? it creates an instance of NotificationService using the provided UserClient and ProductClient. It returns a new instance of the Live class, which implements the NotificationService trait and provides the actual logic for handling notifications. The apply method is a factory method that allows users to easily create a NotificationService without needing to know the details of the Live implementation.
   def apply[F[_]: Async](
       userClient: UserClient[F],
       productClient: ProductClient[F]
