@@ -30,7 +30,7 @@ lazy val root = (project in file("."))
     name := "scala-course",
     publish / skip := true
   )
-  .aggregate(course, user, microcredential, productcatalog)
+  .aggregate(course, user, microcredential, productcatalog, notification)
 
 lazy val course = (project in file("modules/course"))
   .settings(
@@ -57,7 +57,9 @@ lazy val microcredential = (project in file("modules/microcredential"))
   .settings(commonSettings)
 
 // Minimal in-memory product catalog stub, so the user service's POST /alerts product validation
-// (GET /products/{id}) can be exercised end-to-end without a real catalog database.
+// (GET /products/{id}) can be exercised end-to-end without a real catalog database. It also
+// publishes `product.unit_available` events when units are added (POST /products/{id}/units),
+// feeding the notification service's product leg.
 lazy val productcatalog = (project in file("modules/productcatalog"))
   .settings(
     name := "productcatalog",
@@ -65,8 +67,25 @@ lazy val productcatalog = (project in file("modules/productcatalog"))
       catsEffect,
       http4sEmberServer,
       http4sDsl,
-      logbackClassic
+      logbackClassic,
+      log4catsSlf4j,
+      pureconfig,
+      circeCore,
+      circeGeneric,
+      circeParser,
+      fs2Rabbit
     ),
     assembly / mainClass := Some("edu.uoc.epcsd.productcatalog.Main")
+  )
+  .settings(commonSettings)
+
+// RabbitMQ consumer that turns asynchronous domain events (microcredential lifecycle, product
+// unit availability) into user notifications. It has no REST API of its own and no database: it
+// only talks to RabbitMQ (consumer) and to the user/productcatalog services (HTTP client).
+lazy val notification = (project in file("modules/notification"))
+  .settings(
+    name := "notification",
+    libraryDependencies ++= (httpClient ++ rabbit ++ Seq(circeGeneric, circeParser, pureconfig, log4catsSlf4j, logbackClassic)),
+    assembly / mainClass := Some("edu.uoc.epcsd.notification.Main")
   )
   .settings(commonSettings)

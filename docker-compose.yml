@@ -6,7 +6,8 @@
 #   - course          (scala, :18084)
 #   - user            (scala, :18082)
 #   - microcredential (scala, :18085)
-#   - productcatalog  (scala stub, :18081)  — validates POST /alerts product ids
+#   - productcatalog  (scala stub, :18081)  — validates POST /alerts product ids, publishes product.unit_available
+#   - notification    (scala, :18083)       — RabbitMQ consumer that turns domain events into (logged) emails
 #
 #   docker compose up --build
 #
@@ -93,6 +94,21 @@ services:
         condition: service_healthy
     ports:
       - "18085:18085"
+
+  notification:
+    build:
+      context: .
+      dockerfile: modules/notification/Dockerfile
+    container_name: scala-course-notification
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      user:
+        condition: service_started
+      productcatalog:
+        condition: service_started
+    ports:
+      - "18083:18083"
 
 volumes:
   postgres-data:

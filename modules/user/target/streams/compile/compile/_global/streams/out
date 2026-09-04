@@ -1,5 +1,0 @@
-[error] -- [E008] Not Found Error: /home/pablo/Documents/UOC/Software development/Semester 5/Software Architecture/PR2/UOC-Spring-2026/spring-2026/scala-course/modules/user/src/main/scala/edu/uoc/epcsd/user/http/ApiDocs.scala:7:28 
-[error] 7 |import sttp.apispec.openapi.circe.*
-[error]   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^
-[error]   |       value circe is not a member of sttp.apispec.openapi
-[error] one error found
