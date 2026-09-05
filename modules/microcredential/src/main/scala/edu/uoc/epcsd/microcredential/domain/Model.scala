@@ -11,7 +11,7 @@ object MicrocredentialStatus:
   given Codec[MicrocredentialStatus] = Codecs.upperSnakeCodec(values)
 
 final case class Microcredential(
-    id: Long,
+    id: Option[Long],
     submitDate: Instant,
     assignmentDate: Option[Instant],
     status: MicrocredentialStatus,
@@ -21,7 +21,7 @@ final case class Microcredential(
 
 object Microcredential:
   def request(enrollment: Long, now: Instant): Microcredential =
-    Microcredential(0L, now, None, MicrocredentialStatus.Requested, "", enrollment)
+    Microcredential(None, now, None, MicrocredentialStatus.Requested, "", enrollment)
 
 /** Enrollment details as returned by the course service. */
 final case class EnrollmentResponse(

@@ -70,9 +70,12 @@ class MicrocredentialService[F[_]: Monad: Parallel](
       insertedId  <- repo.createIfAbsent(base)
       _           <- insertedId match
                        case Some(id) => publisher.publish(
-                                         MicrocredentialEventPublisher.Pending, messageFor(base.copy(id = id), e))
+                                         MicrocredentialEventPublisher.Pending, messageFor(base.copy(id = Some(id)), e))
                        case None     => ().pure[F] // enrollment already holds a microcredential
     yield ()
 
   private def messageFor(m: Microcredential, e: EnrollmentResponse): MicrocredentialEventMessage =
-    MicrocredentialEventMessage(m.id, e.student, e.courseId, e.id)
+    MicrocredentialEventMessage(requireId(m), e.student, e.courseId, e.id)
+
+  private def requireId(m: Microcredential): Long =
+    m.id.getOrElse(throw new IllegalStateException("Cannot publish an event for a Microcredential with no id"))

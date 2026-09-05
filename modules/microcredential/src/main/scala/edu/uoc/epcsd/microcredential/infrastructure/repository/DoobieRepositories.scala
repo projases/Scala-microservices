@@ -24,7 +24,7 @@ class DoobieMicrocredentialRepository[F[_]](xa: Transactor[F])(using F: MonadCan
   private type Row = (Long, Instant, Option[Instant], MicrocredentialStatus, String, Long)
 
   private def fromRow(r: Row): Microcredential =
-    Microcredential(r._1, r._2, r._3, r._4, r._5, r._6)
+    Microcredential(Some(r._1), r._2, r._3, r._4, r._5, r._6)
 
   def getById(id: Long): F[Option[Microcredential]] =
     sql"""SELECT id, submitdate, assignmentdate, status, content, enrollment
@@ -59,11 +59,14 @@ class DoobieMicrocredentialRepository[F[_]](xa: Transactor[F])(using F: MonadCan
     sql"""UPDATE microcredential SET
             submitdate=${m.submitDate}, assignmentdate=${m.assignmentDate},
             status=${m.status}, content=${m.content}, enrollment=${m.enrollment}
-          WHERE id = ${m.id}"""
+          WHERE id = ${idOf(m)}"""
       .update
       .run
       .transact(xa)
       .void
+
+  private def idOf(m: Microcredential): Long =
+    m.id.getOrElse(throw new IllegalStateException("Cannot persist a Microcredential with no id"))
 
   def getPendingRequests: F[List[Microcredential]] =
     sql"""SELECT id, submitdate, assignmentdate, status, content, enrollment

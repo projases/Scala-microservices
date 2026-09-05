@@ -22,7 +22,7 @@ object Main extends IOApp.Simple:
     yield ()
 
   /** The notification service has no REST API or database of its own: it is a pure RabbitMQ
-    *  consumer that turns asynchronous domain events into (logged) user emails.
+    *  consumer that turns asynchronous domain events into logs simulating user notifications. 
     */
   private def consume(cfg: AppConfig): Resource[IO, Unit] =
     for
