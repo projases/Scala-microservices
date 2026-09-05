@@ -2,7 +2,7 @@ package edu.uoc.epcsd.microcredential.config
 
 import com.typesafe.config.{Config, ConfigFactory}
 
-final case class DatabaseConfig(driver: String, url: String, user: String, password: String, migrate: Boolean)
+final case class DatabaseConfig(driver: String, url: String, user: String, password: String, migrate: Boolean, poolSize: Int = 8)
 final case class ServerConfig(port: Int, host: String)
 final case class CourseServiceConfig(baseUrl: String)
 final case class RetryConfig(maxAttempts: Int, baseDelayMillis: Long)
@@ -39,7 +39,8 @@ object AppConfig:
         AppConfig(
           DatabaseConfig(
             db.getString("driver"), db.getString("url"),
-            db.getString("user"), db.getString("password"), db.getBoolean("migrate")
+            db.getString("user"), db.getString("password"), db.getBoolean("migrate"),
+            if db.hasPath("poolSize") then db.getInt("poolSize") else 8
           ),
           ServerConfig(server.getInt("port"), server.getString("host")),
           CourseServiceConfig(course.getString("baseUrl")),

@@ -7,7 +7,8 @@ final case class DatabaseConfig(
     url: String,
     user: String,
     password: String,
-    migrate: Boolean
+    migrate: Boolean,
+    poolSize: Int = 8
 )
 
 final case class ServerConfig(port: Int, host: String)
@@ -56,7 +57,8 @@ object AppConfig:
             db.getString("url"),
             db.getString("user"),
             db.getString("password"),
-            db.getBoolean("migrate")
+            db.getBoolean("migrate"),
+            if db.hasPath("poolSize") then db.getInt("poolSize") else 8
           ),
           ServerConfig(server.getInt("port"), server.getString("host")),
           UserServiceConfig(userSvc.getString("baseUrl")),

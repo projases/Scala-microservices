@@ -3,7 +3,9 @@ package edu.uoc.epcsd.microcredential.service
 import java.time.Instant
 
 import cats.data.EitherT
-import cats.effect.{Clock, IO}
+import cats.effect.{Clock, IO, Ref}
+import cats.effect.unsafe.implicits.global
+import cats.syntax.all.*
 import munit.CatsEffectSuite
 
 import edu.uoc.epcsd.microcredential.domain.*
@@ -11,28 +13,36 @@ import edu.uoc.epcsd.microcredential.domain.MicrocredentialError.*
 
 object Fakes:
 
-  final case class FakeMicrocredentialRepo(
-      byId: Map[Long, Microcredential] = Map.empty
-  ):
-    var stored: Map[Long, Microcredential] = byId
-    var counter: Long = 0L
+  final case class FakeState(
+      stored: Map[Long, Microcredential] = Map.empty,
+      counter: Long = 0L
+  )
 
-    def repo: MicrocredentialRepository[IO] = new MicrocredentialRepository[IO]:
+  /** Thread-safe in-memory repository: the service parallelizes per-enrollment inserts, so the fake
+    *  must tolerate concurrent mutations (a plain `var` map would lose updates under `parTraverse_`).
+    */
+  final class FakeMicrocredentialRepo(initial: FakeState = FakeState()):
+    private val ref = Ref[IO].of(initial).unsafeRunSync()
+
+    val repo: MicrocredentialRepository[IO] = new MicrocredentialRepository[IO]:
       def getById(id: Long): IO[Option[Microcredential]] =
-        IO.pure(stored.get(id))
+        ref.get.map(_.stored.get(id))
       def getByEnrollment(enrollmentId: Long): IO[Option[Microcredential]] =
-        IO.pure(stored.values.find(_.enrollment == enrollmentId))
-      def create(m: Microcredential): IO[Microcredential] =
-        IO {
-          val saved = m.copy(id = counter)
-          counter += 1
-          stored = stored + (saved.id -> saved)
-          saved
+        ref.get.map(_.stored.values.find(_.enrollment == enrollmentId))
+      def createIfAbsent(m: Microcredential): IO[Option[Long]] =
+        ref.modify { s =>
+          s.stored.values.find(_.enrollment == m.enrollment) match
+            case Some(_) => (s, None)
+            case None =>
+              val saved = m.copy(id = s.counter)
+              (s.copy(stored = s.stored + (saved.id -> saved), counter = s.counter + 1), Some(saved.id))
         }
       def update(m: Microcredential): IO[Unit] =
-        IO { stored = stored + (m.id -> m) }
+        ref.update(s => s.copy(stored = s.stored + (m.id -> m)))
       def getPendingRequests: IO[List[Microcredential]] =
-        IO.pure(stored.values.filter(_.status == MicrocredentialStatus.Requested).toList)
+        ref.get.map(_.stored.values.filter(_.status == MicrocredentialStatus.Requested).toList)
+
+    def stored: IO[Map[Long, Microcredential]] = ref.get.map(_.stored)
 
   final case class FakeCourseService(
       enrollments: List[EnrollmentResponse] = Nil,
@@ -47,10 +57,11 @@ object Fakes:
         case None    => EitherT.leftT(CourseServiceUnavailable(s"enrollment $enrollmentId not found"))
 
   final case class FakeEventPublisher():
-    var published: List[(String, MicrocredentialEventMessage)] = Nil
+    val publishedRef = Ref[IO].of(List.empty[(String, MicrocredentialEventMessage)]).unsafeRunSync()
     def publisher: MicrocredentialEventPublisher[IO] = new MicrocredentialEventPublisher[IO]:
       def publish(cmd: String, msg: MicrocredentialEventMessage): IO[Unit] =
-        IO { published = published :+ (cmd -> msg) }
+        publishedRef.update(_ :+ (cmd -> msg))
+    def published: IO[List[(String, MicrocredentialEventMessage)]] = publishedRef.get
 
   def fixedClock(instant: Instant): Clock[IO] = new Clock[IO]:
     override def realTime: IO[scala.concurrent.duration.FiniteDuration] =
@@ -77,7 +88,7 @@ class MicrocredentialServiceSuite extends munit.CatsEffectSuite:
 
   test("getMicrocredentialById returns Some when it exists") {
     val mc = Microcredential(1L, now, None, MicrocredentialStatus.Requested, "", 10L)
-    val repo = Fakes.FakeMicrocredentialRepo(byId = Map(1L -> mc))
+    val repo = new Fakes.FakeMicrocredentialRepo(Fakes.FakeState(stored = Map(1L -> mc)))
     service(repo).getMicrocredentialById(1L).map {
       case Some(m) => assertEquals(m.id, 1L)
       case None    => fail("expected microcredential")
@@ -85,7 +96,7 @@ class MicrocredentialServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("getMicrocredentialById returns None when not found") {
-    service(Fakes.FakeMicrocredentialRepo()).getMicrocredentialById(99L).map {
+    service(new Fakes.FakeMicrocredentialRepo()).getMicrocredentialById(99L).map {
       case None => ()
       case _    => fail("expected None")
     }
@@ -93,27 +104,29 @@ class MicrocredentialServiceSuite extends munit.CatsEffectSuite:
 
   test("approvePendingMicrocredential transitions REQUESTED to GRANTED and publishes") {
     val mc = Microcredential(1L, now, None, MicrocredentialStatus.Requested, "", 10L)
-    val repo = Fakes.FakeMicrocredentialRepo(byId = Map(1L -> mc))
+    val repo = new Fakes.FakeMicrocredentialRepo(Fakes.FakeState(Map(1L -> mc)))
     val pub = Fakes.FakeEventPublisher()
     val courseSvc = Fakes.FakeCourseService(singleEnrollment = Some(enrollment1))
     val svc = service(repo, courseSvc, pub)
 
     svc.approvePendingMicrocredential(1L).value.flatMap {
       case Right(()) =>
-        IO {
-          assertEquals(repo.stored(1L).status, MicrocredentialStatus.Granted)
-          assertEquals(repo.stored(1L).assignmentDate, Some(now))
-          assertEquals(pub.published.length, 1)
-          assertEquals(pub.published.head._1, MicrocredentialEventPublisher.Approved)
-          assertEquals(pub.published.head._2.userEmail, "student@uoc.edu")
-          assertEquals(pub.published.head._2.courseId, 1L)
-        }
+        for
+          st <- repo.stored
+          p  <- pub.published
+        yield
+          assertEquals(st(1L).status, MicrocredentialStatus.Granted)
+          assertEquals(st(1L).assignmentDate, Some(now))
+          assertEquals(p.length, 1)
+          assertEquals(p.head._1, MicrocredentialEventPublisher.Approved)
+          assertEquals(p.head._2.userEmail, "student@uoc.edu")
+          assertEquals(p.head._2.courseId, 1L)
       case Left(e) => IO(fail(s"expected success, got $e"))
     }
   }
 
   test("approvePendingMicrocredential fails with NotFound") {
-    service(Fakes.FakeMicrocredentialRepo()).approvePendingMicrocredential(99L).value.map {
+    service(new Fakes.FakeMicrocredentialRepo()).approvePendingMicrocredential(99L).value.map {
       case Left(NotFound(id)) => assertEquals(id, 99L)
       case other              => fail(s"expected NotFound, got $other")
     }
@@ -121,7 +134,7 @@ class MicrocredentialServiceSuite extends munit.CatsEffectSuite:
 
   test("approvePendingMicrocredential fails with InvalidState when not REQUESTED") {
     val mc = Microcredential(1L, now, Some(now), MicrocredentialStatus.Granted, "", 10L)
-    val repo = Fakes.FakeMicrocredentialRepo(byId = Map(1L -> mc))
+    val repo = new Fakes.FakeMicrocredentialRepo(Fakes.FakeState(Map(1L -> mc)))
     service(repo).approvePendingMicrocredential(1L).value.map {
       case Left(InvalidState(expected, actual)) =>
         assertEquals(expected, "REQUESTED")
@@ -132,17 +145,19 @@ class MicrocredentialServiceSuite extends munit.CatsEffectSuite:
 
   test("rejectPendingMicrocredential transitions REQUESTED to REJECTED and publishes") {
     val mc = Microcredential(1L, now, None, MicrocredentialStatus.Requested, "", 10L)
-    val repo = Fakes.FakeMicrocredentialRepo(byId = Map(1L -> mc))
+    val repo = new Fakes.FakeMicrocredentialRepo(Fakes.FakeState(Map(1L -> mc)))
     val pub = Fakes.FakeEventPublisher()
     val courseSvc = Fakes.FakeCourseService(singleEnrollment = Some(enrollment1))
     val svc = service(repo, courseSvc, pub)
 
     svc.rejectPendingMicrocredential(1L).value.flatMap {
       case Right(()) =>
-        IO {
-          assertEquals(repo.stored(1L).status, MicrocredentialStatus.Rejected)
-          assertEquals(pub.published.head._1, MicrocredentialEventPublisher.Rejected)
-        }
+        for
+          st <- repo.stored
+          p  <- pub.published
+        yield
+          assertEquals(st(1L).status, MicrocredentialStatus.Rejected)
+          assertEquals(p.head._1, MicrocredentialEventPublisher.Rejected)
       case Left(e) => IO(fail(s"expected success, got $e"))
     }
   }
@@ -150,50 +165,75 @@ class MicrocredentialServiceSuite extends munit.CatsEffectSuite:
   test("getPendingMicrocredentialRequests returns only REQUESTED") {
     val req  = Microcredential(1L, now, None, MicrocredentialStatus.Requested, "", 10L)
     val done = Microcredential(2L, now, Some(now), MicrocredentialStatus.Granted, "", 11L)
-    val repo = Fakes.FakeMicrocredentialRepo(byId = Map(1L -> req, 2L -> done))
+    val repo = new Fakes.FakeMicrocredentialRepo(Fakes.FakeState(Map(1L -> req, 2L -> done)))
     service(repo).getPendingMicrocredentialRequests.map { list =>
       assertEquals(list.map(_.id), List(1L))
     }
   }
 
   test("requestCourseMicrocredentials creates a microcredential per enrollment and publishes Pending") {
-    val repo = Fakes.FakeMicrocredentialRepo()
+    val repo = new Fakes.FakeMicrocredentialRepo()
     val pub = Fakes.FakeEventPublisher()
     val courseSvc = Fakes.FakeCourseService(enrollments = List(enrollment1, enrollment2))
     val svc = service(repo, courseSvc, pub)
 
     svc.requestCourseMicrocredentials(1L).value.flatMap {
       case Right(()) =>
-        IO {
-          assertEquals(repo.stored.size, 2)
-          assertEquals(repo.stored.values.count(_.status == MicrocredentialStatus.Requested), 2)
-          assertEquals(pub.published.length, 2)
-          assertEquals(pub.published.map(_._1).distinct, List(MicrocredentialEventPublisher.Pending))
-        }
+        for
+          st <- repo.stored
+          p  <- pub.published
+        yield
+          assertEquals(st.size, 2)
+          assertEquals(st.values.count(_.status == MicrocredentialStatus.Requested), 2)
+          assertEquals(p.length, 2)
+          assertEquals(p.map(_._1).distinct, List(MicrocredentialEventPublisher.Pending))
       case Left(e) => IO(fail(s"expected success, got $e"))
     }
   }
 
   test("requestCourseMicrocredentials is idempotent per enrollment") {
     val existing = Microcredential(1L, now, None, MicrocredentialStatus.Requested, "", 10L)
-    val repo = Fakes.FakeMicrocredentialRepo(byId = Map(1L -> existing))
+    val repo = new Fakes.FakeMicrocredentialRepo(Fakes.FakeState(Map(1L -> existing)))
     val pub = Fakes.FakeEventPublisher()
     val courseSvc = Fakes.FakeCourseService(enrollments = List(enrollment1, enrollment2))
     val svc = service(repo, courseSvc, pub)
 
     svc.requestCourseMicrocredentials(1L).value.flatMap {
       case Right(()) =>
-        IO {
+        for
+          st <- repo.stored
+          p  <- pub.published
+        yield
           // enrollment1 already has a microcredential → only enrollment2 is created
-          assertEquals(repo.stored.size, 2)
-          assertEquals(pub.published.length, 1)
-        }
+          assertEquals(st.size, 2)
+          assertEquals(p.length, 1)
       case Left(e) => IO(fail(s"expected success, got $e"))
     }
   }
 
+  test("requestCourseMicrocredentials dedupes concurrent double-calls for the same enrollment") {
+    val repo = new Fakes.FakeMicrocredentialRepo()
+    val pub = Fakes.FakeEventPublisher()
+    val courseSvc = Fakes.FakeCourseService(enrollments = List(enrollment1))
+    val svc = service(repo, courseSvc, pub)
+
+    // Two calls submitted at once, as the course service's retry would do: the repo's atomic
+    // ON CONFLICT DO NOTHING means only one microcredential (and one pending event) is produced.
+    val double = (svc.requestCourseMicrocredentials(1L).value, svc.requestCourseMicrocredentials(1L).value).tupled
+    double.flatMap {
+      case (Right(()), Right(())) =>
+        for
+          st <- repo.stored
+          p  <- pub.published
+        yield
+          assertEquals(st.size, 1)
+          assertEquals(p.length, 1)
+      case other => IO(fail(s"expected both calls to succeed, got $other"))
+    }
+  }
+
   test("requestCourseMicrocredentials fails with NoEnrollments when no enrollments") {
-    val repo = Fakes.FakeMicrocredentialRepo()
+    val repo = new Fakes.FakeMicrocredentialRepo()
     val courseSvc = Fakes.FakeCourseService(enrollments = Nil)
     val svc = service(repo, courseSvc)
 

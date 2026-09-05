@@ -20,7 +20,13 @@ object Eff:
 trait MicrocredentialRepository[F[_]]:
   def getById(id: Long): F[Option[Microcredential]]
   def getByEnrollment(enrollmentId: Long): F[Option[Microcredential]]
-  def create(m: Microcredential): F[Microcredential]
+
+  /** Inserts `m` unless an enrollment already holds a microcredential. Returns the generated id
+    *  when the row was created, or `None` when it already existed (atomic `ON CONFLICT DO NOTHING`,
+    *  so it is safe under concurrency and retries).
+    */
+  def createIfAbsent(m: Microcredential): F[Option[Long]]
+
   def update(m: Microcredential): F[Unit]
   def getPendingRequests: F[List[Microcredential]]
 

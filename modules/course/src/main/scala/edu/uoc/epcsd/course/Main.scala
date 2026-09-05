@@ -106,7 +106,7 @@ object Main extends IOApp.Simple:
   private def transactor(cfg: AppConfig): Resource[IO, HikariTransactor[IO]] =
     for
       // why ce? ce stands for "connection execution context". It is a fixed thread pool that is used to execute database operations in a separate thread pool. This allows for better performance and prevents blocking the main application threads. The fixed thread pool is created with 8 threads, which is a reasonable number for handling concurrent database operations without overwhelming the system.
-      ce <- ExecutionContexts.fixedThreadPool[IO](8)
+      ce <- ExecutionContexts.fixedThreadPool[IO](cfg.database.poolSize)
 // why xa? xa is a common variable name used to represent a transactor in Doobie. It stands for "transactor" and is used to execute database operations. The transactor is responsible for managing the database connection and executing queries in a safe and efficient manner. In this case, xa is created using HikariTransactor, which provides connection pooling and integrates with Doobie for database access.
       xa <- HikariTransactor.newHikariTransactor[IO](
               cfg.database.driver,

@@ -35,13 +35,19 @@ object NotificationConsumer:
       _ <- if product.enabled then productStream(client, product, service) else Resource.unit[F]
     yield ()
 
+  /** How many messages each stream decodes and dispatches concurrently. Bounded so one slow
+    *  handler (a downstream HTTP timeout) can't stall the whole queue, without overwhelming the
+    *  user/product services with unbounded fan-out.
+    */
+  private val parallelism = 4
+
   private def microStream[F[_]: Async](
       client: RabbitClient[F],
       cfg: RabbitStreamConfig,
       service: NotificationService[F]
   ): Resource[F, Unit] =
     stream(client, cfg) { (consumer, logger) =>
-      consumer.evalMap { env =>
+      consumer.parEvalMap(parallelism) { env =>
         if env.routingKey.value.endsWith(".pending") then
           decodeThen(env, logger, service.notifyCredentialPending)
         else if env.routingKey.value.endsWith(".approved") then
@@ -57,7 +63,7 @@ object NotificationConsumer:
       service: NotificationService[F]
   ): Resource[F, Unit] =
     stream(client, cfg) { (consumer, logger) =>
-      consumer.evalMap { env =>
+      consumer.parEvalMap(parallelism) { env =>
         decodeThen(env, logger, service.notifyProductAvailable)
       }
     }

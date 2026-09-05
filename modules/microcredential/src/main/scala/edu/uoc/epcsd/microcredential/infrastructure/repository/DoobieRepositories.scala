@@ -42,13 +42,18 @@ class DoobieMicrocredentialRepository[F[_]](xa: Transactor[F])(using F: MonadCan
       .option
       .transact(xa)
 
-  def create(m: Microcredential): F[Microcredential] =
+  /** Atomic idempotent insert: returns the new id when the microcredential was created, or `None`
+    *  when an enrollment already holds one. Relies on the `uq_microcredential_enrollment` unique
+    *  constraint (V2 migration), so concurrent/retried calls cannot double-insert.
+    */
+  def createIfAbsent(m: Microcredential): F[Option[Long]] =
     sql"""INSERT INTO microcredential (submitdate, assignmentdate, status, content, enrollment)
-          VALUES (${m.submitDate}, ${m.assignmentDate}, ${m.status}, ${m.content}, ${m.enrollment})"""
-      .update
-      .withUniqueGeneratedKeys[Long]("id")
+          VALUES (${m.submitDate}, ${m.assignmentDate}, ${m.status}, ${m.content}, ${m.enrollment})
+          ON CONFLICT (enrollment) DO NOTHING
+          RETURNING id"""
+      .query[Long]
+      .option
       .transact(xa)
-      .map(id => m.copy(id = id))
 
   def update(m: Microcredential): F[Unit] =
     sql"""UPDATE microcredential SET

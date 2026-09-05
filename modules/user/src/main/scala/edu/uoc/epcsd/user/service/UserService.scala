@@ -3,12 +3,13 @@ package edu.uoc.epcsd.user.service
 import java.time.LocalDate
 
 import cats.Monad
+import cats.Parallel
 import cats.syntax.all.*
 
 import edu.uoc.epcsd.user.domain.*
 import edu.uoc.epcsd.user.domain.Eff.{cond, fromOptionF, liftF}
 
-class UserService[F[_]: Monad](
+class UserService[F[_]: Monad: Parallel](
     userRepo: UserRepository[F],
     alertRepo: AlertRepository[F],
     productSvc: ProductService[F]
@@ -29,7 +30,7 @@ class UserService[F[_]: Monad](
   def getUsersToAlert(productId: Long, date: LocalDate): F[List[GetUserResponse]] =
     for
       alerts <- alertRepo.findAlertsByProductAndDate(productId, date)
-      users  <- alerts.traverseFilter(a => userRepo.findUserById(a.userId))
+      users  <- alerts.parTraverseFilter(a => userRepo.findUserById(a.userId))
     yield users.map(GetUserResponse.fromDomain).distinctBy(_.id)
 
   def createUser(req: CreateUserRequest): Eff[F, Long] =

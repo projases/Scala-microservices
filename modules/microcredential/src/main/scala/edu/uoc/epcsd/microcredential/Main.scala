@@ -89,7 +89,7 @@ object Main extends IOApp.Simple:
 
   private def transactor(cfg: AppConfig): Resource[IO, HikariTransactor[IO]] =
     for
-      ce <- ExecutionContexts.fixedThreadPool[IO](8)
+      ce <- ExecutionContexts.fixedThreadPool[IO](cfg.database.poolSize)
       xa <- HikariTransactor.newHikariTransactor[IO](
               cfg.database.driver, cfg.database.url, cfg.database.user, cfg.database.password, ce
             )
