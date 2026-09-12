@@ -57,7 +57,15 @@ object Routes:
     )
 
   // ---- Public endpoints (used for serving and OpenAPI derivation) ----
+  // 
+// Types on PublicEndpoint[I, E, O, R]:
+// I – input type (decoded from path/query/body).
 
+// E – error type (here ApiError).
+
+// O – output (success response body/type).
+
+// R – requirements .
   private val courseById: PublicEndpoint[Long, ApiError, Course, Any] =
     endpoint.get.in("courses" / path[Long]("courseId")).errorOut(errorOut).out(jsonBody[Course])
 

@@ -1,6 +1,7 @@
 # Scala Microservices
 
 This is a functional approach to my Software Architecture course project at the Universitat Oberta de Catalunya (UOC) -> https://github.com/UOC-EPCSD-ISCSD-SA
+
 Built with Scala 3, Cats Effect, http4s, tapir, and Doobie, following a functional architecture.
 
 Key differences from the course project:
@@ -8,18 +9,67 @@ Key differences from the course project:
 - RabbitMQ is used for async communication between services, instead of Kafka.
 - One docker compose file to run all services, Postgres, and RabbitMQ.
 - Product catalog was not implemented, but a stub service is provided to simulate product availability events.
-- Used parallelism and concurrency to improve performance, instead of a single-threaded approach.
+
+## Architectural Decisions 
+
+### Domain Modeling:
+- In the Java version entities were modeled as "fat aggregate" containing a nested List of enrollments. This created issues with immutability, as one would have to copy every enrollment on every state change. Decoupled Course and Enrollment into "skinny classes" referencing only by courseId. 
+
+- Using id: [Option] or sentinel values broke the DDD rule of not allowing illegal states representable. The solution was to create separate persisted aggregates (Course) from draft entities (NewCourse). Since NewCourse lacks id field, it would be impossible to pass an unsaved entity to an update query for example. 
+
+- Domain invariants are validated on creation
+
+- Tagless-Final algebra decoupled domain behaviors from concrete classes. CourseError ADT allowed to declare failure modes (F[Either[CourseError, A]]), thus eliminating nulls, runtime exceptions -- while allowing composition. 
+
+- Using Cats Effects fibers allowed to move from O(N) sequential network delays to O(1) parallel operation
+
+
+## Development status
+
+This is a *working* system — every service runs, the tests are green, and the async
+flow is smoke-tested — that is also being actively iterated on as a
+functional-programming study. If you are skimming: the codebase is healthy and running;
+what follows says what is being changed next and why. 
+study notes that drove these decisions.
+
+### Stable today
+
+- 5 services under Docker Compose; RabbitMQ-backed async flow gated by `scripts/smoke-test.sh`.
+- Tagless-final service layers, Doobie repositories, parallel per-enrollment fibers.
+- Unit suites green and warning-clean under `-Wunused:all` (`sbt test`).
+
+### Actively being developed
+
+- **Domain modeling — "draft vs persisted" split.** `Course`, `Enrollment` and
+  `Microcredential` still carry `id: Option[Long]`, forcing every update / event publish
+  to unwrap the id at runtime (`getOrElse(throw ...)` guards). The decided fix is to
+  separate `NewCourse` / `NewEnrollment` / `NewMicrocredential` (no `id` field; `create`
+  mints it at the repository boundary) from the persisted types (`id: Long`), making
+  "updating an unsaved entity" a compile error instead of a runtime exception.
+
+- **Effects-as-Data exploration.** A side-by-side, teaching re-implementation of the
+  course lifecycle as pure reducers returning effect lists, interpreted by an
+  imperative shell (see `Gemini/effects_as_data.md`). Kept as a comparison artifact to
+  deepen the functional-core / imperative-shell story — not a replacement for the
+  current tagless-final service.
+
+### Considered and rejected 
+
+- **Client-side UUIDv7 ids**: they eliminate the id-less state entirely, but break the
+  numeric `Long` REST contract of the legacy system.
+- **`Entity[ID, A]` wrapper** and a **`StateT`-based state machine**: rejected for
+  indirection and opacity — the explicit draft/persisted split wins.
 
 
 ## Services
 
-| Service          | Port  | Description                                                |
-|------------------|-------|------------------------------------------------------------|
-| `course`         | 18084 | Course lifecycle, enrollments, status                       |
-| `user`           | 18082 | Users, alerts, product validation                           |
-| `microcredential`| 18085 | Microcredential requests                                    |
-| `productcatalog` | 18081 | Stub product catalog; publishes `product.unit_available`    |
-| `notification`   | 18083 | RabbitMQ consumer turning domain events into (logged) emails |
+| Service           | Port  | Description                                                  |
+|-------------------|-------|--------------------------------------------------------------|
+| `course`          | 18084 | Course lifecycle, enrollments, status                        |
+| `user`            | 18082 | Users, alerts, product validation                            |
+| `microcredential` | 18085 | Microcredential requests                                     |
+| `productcatalog`  | 18081 | Stub product catalog; publishes `product.unit_available`     |
+| `notification`    | 18083 | RabbitMQ consumer turning domain events into (logged) emails |
 
 ## Requirements
 
@@ -36,14 +86,6 @@ docker compose up --build -d
 HTTP services expose their OpenAPI v3 spec at `GET /v3/api-docs` (JSON committed in `docs/`).
 `notification` is a pure RabbitMQ consumer with no REST API of its own.
 
-### Configuration overlay
-
-Each service reads its config from `src/main/resources/application.conf` (defaults: localhost
-ports, RabbitMQ on `localhost`). Inside Docker, the compose file mounts `docker/<service>.conf` on
-top of that so the services reach each other and the broker at the compose hostnames (e.g.
-`rabbitmq`). To run a single service natively against the Dockerised broker, override with
-`-Dconfig.file` or set `rabbit.host=localhost`.
-
 ## Event flow (async, RabbitMQ)
 
 - `microcredential` publishes `microcredential.pending` / `.approved` / `.rejected` on the
@@ -56,28 +98,50 @@ top of that so the services reach each other and the broker at the compose hostn
 ## Architecture
 
 A small set of HTTP services (Cats Effect + http4s + tapir) talk to each other **synchronously**
-over REST when they need an immediate answer (e.g. `user` validating a product against
-`productcatalog`), and **asynchronously** over RabbitMQ when an action can be deferred (domain
-events consumed by `notification`).
-
-```text
-                 ┌───────────────┐   GET /products/{id}   ┌────────────────┐
-   user ─────────▶ productcatalog ───────────────────────▶ (validates      )
-   alerts        │               │                        │  product exists)
-                 └───────┬───────┘                        └────────────────┘
-                         │ POST /products/{id}/units → product.events
-                         │                       product.unit_available
-                         ▼
-                 ┌───────────────┐   microcredential.events   ┌──────────────┐
-   microcredential ─────────────▶ notification ─────────────▶   (logs the    )
-   create/approve │               │   pending/approved/rejected│  "email")    │
-                 └───────────────┘                            └──────────────┘
-```
+over REST when they need an immediate answer, and **asynchronously** over RabbitMQ -- domain events consumed by `notification`.
 
 Every service is a self-contained module under `modules/`, packaged as a fat JAR
 (`sbt-assembly`) run inside its own container. RabbitMQ holds the glue: exchange
 `product.events` (`product.unit_available`) and `microcredential.events`
 (`microcredential.pending|approved|rejected`).
+
+### Functional core, imperative edges
+
+Each service keeps a *pure* functional core (the service layer) between two *effectful*
+edges: the HTTP API in front of it and the repository / broker / external-service
+interpreters behind it. The core only builds a description (`Eff[F, A] =
+EitherT[F, CourseError, A]`); the effects happen when the descriptions are run. Tracing
+one workflow (`closeCourse`) shows exactly which steps are pure and which reach into
+the shell:
+
+```
+   closeCourse — imperative edges, functional core
+
+   functional core (pure description)          imperative shell (the effects)
+
+   Eff[F, A] = EitherT[F, CourseError, A]
+
+   closeCourse(id)
+   ├─ getCourseOrFail(id)          ──►  doobie   SELECT * FROM course WHERE id = ?
+   │    [Left: CourseNotFound]
+   ├─ ensure(status == ACTIVE)     none   (a value — no I/O)
+   │    [Left: InvalidState]
+   ├─ requestMicrocredentials(id)  ──►  REST    course ──▶ microcredential POST /create
+   ├─ findEnrollmentByCourse(id)   ──►  doobie   SELECT * FROM enrollment WHERE course_id = ?
+   ├─ ensure(all GRADED)           none   (a value — no I/O)
+   │    [Left: EnrollmentsNotGraded]
+   ├─ next = course.copy(CLOSED)   none   (pure state transition)
+   │         enrollments.copy(CLOSED)
+   ├─ persistCourseClosure(next)   ──►  doobie   one txn: course + enrollments
+   └─ publishClosed(course)        ──►  rabbit   enqueue CourseClosed → broker (async)
+                                       ▲ drained by a background fiber:
+                                       │ never blocks the workflow,
+                                       │ never dropped (retried + re-queued)
+
+   The core composes a *description*; only the shell runs it.
+   The same description is tested against FakeStore, not doobie/rabbit.
+   Any Left(CourseError) is a value → HTTP 4xx/5xx, never an exception.
+```
 
 ### Verifying the async flow
 

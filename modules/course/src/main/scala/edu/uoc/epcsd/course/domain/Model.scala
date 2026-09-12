@@ -18,7 +18,6 @@ enum EnrollmentStatus:
 object EnrollmentStatus:
   given Codec[EnrollmentStatus] = Codecs.upperSnakeCodec(values)
 
-/** Kind of user; relevant here only to distinguish instructors from students. */
 enum UserType:
   case Student, Admin, Instructor
 
@@ -98,7 +97,6 @@ final case class Enrollment(
     courseId: Long
 )
 
-// why are all case classes final? In Scala, case classes are often declared as final to prevent further subclassing. This is done for several reasons:
 // 1. Immutability: Case classes are designed to be immutable data structures. By making them final, it ensures that their behavior cannot be altered through inheritance, which helps maintain their immutability guarantees.
 // 2. Pattern Matching: Case classes are commonly used in pattern matching. Making them final ensures that the pattern matching behavior is predictable and consistent, as there won't be any unexpected subclasses that could introduce new cases.
 // 3. Performance: Final classes can be optimized by the compiler, leading to better performance in certain scenarios. The compiler can make assumptions about the class hierarchy, which can lead to more efficient code generation.

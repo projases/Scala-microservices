@@ -21,10 +21,10 @@ import DoobieMappings.given
 class DoobieMicrocredentialRepository[F[_]](xa: Transactor[F])(using F: MonadCancel[F, Throwable])
     extends MicrocredentialRepository[F]:
 
-  private type Row = (Long, Instant, Option[Instant], MicrocredentialStatus, String, Long)
+  private type Row = (Option[Long], Instant, Option[Instant], MicrocredentialStatus, String, Long)
 
   private def fromRow(r: Row): Microcredential =
-    Microcredential(Some(r._1), r._2, r._3, r._4, r._5, r._6)
+    Microcredential(r._1, r._2, r._3, r._4, r._5, r._6)
 
   def getById(id: Long): F[Option[Microcredential]] =
     sql"""SELECT id, submitdate, assignmentdate, status, content, enrollment
@@ -42,7 +42,7 @@ class DoobieMicrocredentialRepository[F[_]](xa: Transactor[F])(using F: MonadCan
       .option
       .transact(xa)
 
-  /** Atomic idempotent insert: returns the new id when the microcredential was created, or `None`
+  /** Returns the new id when the microcredential was created, or `None`
     *  when an enrollment already holds one. Relies on the `uq_microcredential_enrollment` unique
     *  constraint (V2 migration), so concurrent/retried calls cannot double-insert.
     */
@@ -64,7 +64,7 @@ class DoobieMicrocredentialRepository[F[_]](xa: Transactor[F])(using F: MonadCan
       .run
       .transact(xa)
       .void
-
+ // safeguard because of using `Option[Long]` for id, if the id is None, we don't want to update anything, so we can just return a unit.
   private def idOf(m: Microcredential): Long =
     m.id.getOrElse(throw new IllegalStateException("Cannot persist a Microcredential with no id"))
 

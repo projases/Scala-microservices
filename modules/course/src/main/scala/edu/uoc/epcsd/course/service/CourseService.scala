@@ -45,7 +45,6 @@ class CourseService[F[_]: Monad: Parallel](
       .flatMap(_.parTraverse(enrollment => userSvc.getUserByEmail(enrollment.student)))
       .map(_.flatten)
 
-// what is req? 
   def createCourse(req: CreateCourse): Eff[F, Long] =
     for
       course  <- fromEither(
