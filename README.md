@@ -21,7 +21,7 @@ Key differences from the course project:
 
 - Tagless-Final algebra decoupled domain behaviors from concrete classes. CourseError ADT allowed to declare failure modes (F[Either[CourseError, A]]), thus eliminating nulls, runtime exceptions -- while allowing composition. 
 
-- Using Cats Effects fibers allowed to move from O(N) sequential network delays to O(1) parallel operation
+- Using Cats Effects fibers allowed to move from *O(N)* sequential network delays to *O(1)* parallel operation
 
 
 ## Development status
@@ -29,8 +29,7 @@ Key differences from the course project:
 This is a *working* system — every service runs, the tests are green, and the async
 flow is smoke-tested — that is also being actively iterated on as a
 functional-programming study. If you are skimming: the codebase is healthy and running;
-what follows says what is being changed next and why. 
-study notes that drove these decisions.
+what follows says what is being changed next and why.
 
 ### Stable today
 
@@ -44,22 +43,14 @@ study notes that drove these decisions.
   `Microcredential` still carry `id: Option[Long]`, forcing every update / event publish
   to unwrap the id at runtime (`getOrElse(throw ...)` guards). The decided fix is to
   separate `NewCourse` / `NewEnrollment` / `NewMicrocredential` (no `id` field; `create`
-  mints it at the repository boundary) from the persisted types (`id: Long`), making
+  issues it at the repository boundary) from the persisted types (`id: Long`), making
   "updating an unsaved entity" a compile error instead of a runtime exception.
 
 - **Effects-as-Data exploration.** A side-by-side, teaching re-implementation of the
   course lifecycle as pure reducers returning effect lists, interpreted by an
-  imperative shell (see `Gemini/effects_as_data.md`). Kept as a comparison artifact to
+  imperative shell. Kept as a comparison artifact to
   deepen the functional-core / imperative-shell story — not a replacement for the
   current tagless-final service.
-
-### Considered and rejected 
-
-- **Client-side UUIDv7 ids**: they eliminate the id-less state entirely, but break the
-  numeric `Long` REST contract of the legacy system.
-- **`Entity[ID, A]` wrapper** and a **`StateT`-based state machine**: rejected for
-  indirection and opacity — the explicit draft/persisted split wins.
-
 
 ## Services
 
@@ -104,44 +95,6 @@ Every service is a self-contained module under `modules/`, packaged as a fat JAR
 (`sbt-assembly`) run inside its own container. RabbitMQ holds the glue: exchange
 `product.events` (`product.unit_available`) and `microcredential.events`
 (`microcredential.pending|approved|rejected`).
-
-### Functional core, imperative edges
-
-Each service keeps a *pure* functional core (the service layer) between two *effectful*
-edges: the HTTP API in front of it and the repository / broker / external-service
-interpreters behind it. The core only builds a description (`Eff[F, A] =
-EitherT[F, CourseError, A]`); the effects happen when the descriptions are run. Tracing
-one workflow (`closeCourse`) shows exactly which steps are pure and which reach into
-the shell:
-
-```
-   closeCourse — imperative edges, functional core
-
-   functional core (pure description)          imperative shell (the effects)
-
-   Eff[F, A] = EitherT[F, CourseError, A]
-
-   closeCourse(id)
-   ├─ getCourseOrFail(id)          ──►  doobie   SELECT * FROM course WHERE id = ?
-   │    [Left: CourseNotFound]
-   ├─ ensure(status == ACTIVE)     none   (a value — no I/O)
-   │    [Left: InvalidState]
-   ├─ requestMicrocredentials(id)  ──►  REST    course ──▶ microcredential POST /create
-   ├─ findEnrollmentByCourse(id)   ──►  doobie   SELECT * FROM enrollment WHERE course_id = ?
-   ├─ ensure(all GRADED)           none   (a value — no I/O)
-   │    [Left: EnrollmentsNotGraded]
-   ├─ next = course.copy(CLOSED)   none   (pure state transition)
-   │         enrollments.copy(CLOSED)
-   ├─ persistCourseClosure(next)   ──►  doobie   one txn: course + enrollments
-   └─ publishClosed(course)        ──►  rabbit   enqueue CourseClosed → broker (async)
-                                       ▲ drained by a background fiber:
-                                       │ never blocks the workflow,
-                                       │ never dropped (retried + re-queued)
-
-   The core composes a *description*; only the shell runs it.
-   The same description is tested against FakeStore, not doobie/rabbit.
-   Any Left(CourseError) is a value → HTTP 4xx/5xx, never an exception.
-```
 
 ### Verifying the async flow
 
