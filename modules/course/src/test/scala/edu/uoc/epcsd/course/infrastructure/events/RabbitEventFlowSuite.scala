@@ -12,7 +12,7 @@ import dev.profunktor.fs2rabbit.model.*
 import munit.CatsEffectSuite
 
 import edu.uoc.epcsd.course.config.RetryConfig
-import edu.uoc.epcsd.course.domain.{Course, CourseClosed}
+import edu.uoc.epcsd.course.domain.{Course, CourseClosed, CourseStatus}
 
 /** End-to-end round trip through the real RabbitMQ broker:
   *
@@ -48,7 +48,11 @@ class RabbitEventFlowSuite extends CatsEffectSuite:
     )
 
   test("a CourseClosed event published on closeCourse reaches a functional consumer") {
+    // what is Ref: Ref is a mutable reference that can be safely shared between concurrent processes in a functional programming context. In this case, it is used to capture the CourseClosed event received by the consumer.
+    // .unsafe: Ref.unsafe creates a Ref without any safety guarantees, meaning it can be used in a non-concurrent context. In this case, it is used to create a Ref that will be updated by the consumer when it receives a CourseClosed event.
     val captured = Ref.unsafe[IO, Option[CourseClosed]](None)
+    // handler: CourseClosed => IO[Unit] is a function that takes a CourseClosed event and returns an IO action that updates the captured Ref with the received event. It uses the update method of Ref to set the value to Some(closed) if it is currently None, or leave it unchanged if it already has a value.
+    // what is closed? The `closed` parameter in the handler function represents the `CourseClosed` event that is received by the consumer. When the consumer receives a `CourseClosed` event from the RabbitMQ queue, it invokes this handler function, passing the received event as the `closed` argument. The handler then updates the `captured` Ref to store this event, allowing the test to later verify that the event was successfully received and processed.
     val handler: CourseClosed => IO[Unit] = closed => captured.update(_.orElse(Some(closed)))
 
     val program: IO[Unit] =
@@ -66,7 +70,7 @@ class RabbitEventFlowSuite extends CatsEffectSuite:
             enrollmentStartDate = java.time.LocalDate.of(2026, 1, 1),
             enrollmentEndDate = java.time.LocalDate.of(2026, 6, 30),
             mode = "Online", price = 100, objectives = "o", methology = "m",
-            duration = 40, language = "en", location = "web", status = edu.uoc.epcsd.course.domain.CourseStatus.Closed
+            duration = 40, language = "en", location = "web", status = CourseStatus.Closed
           )
           for
             _   <- pub.publishClosed(closedCourse)

@@ -16,8 +16,6 @@ import edu.uoc.epcsd.course.infrastructure.Retry
   *  free of resilience concerns. It retries only on connection failures / 5xx (never 4xx)
   *  with the shared exponential backoff from `infrastructure.Retry`.
   *
-  *  Safety note: retrying `POST /microcredentials/{courseId}/create` is only valid because the
-  *  endpoint is required to be idempotent — see SPECIFICATION §10.3.
   */
 class MicrocredentialClient[F[_]](client: Client[F], baseUrl: String, retry: RetryConfig)(using
     T: Temporal[F]
@@ -28,13 +26,14 @@ class MicrocredentialClient[F[_]](client: Client[F], baseUrl: String, retry: Ret
       Method.POST,
       Uri.unsafeFromString(s"$baseUrl/microcredentials/$courseId/create")
     )
-    // Connection failures are folded into the error channel so they become retryable too.
+    // Connection failures are folded into the error channel(CourseError) so they are retryable instead of failing. 
     val attempt: F[Either[CourseError, Status]] =
       client
         .run(req)
         .use(resp => resp.status.asRight[CourseError].pure[F])
         .handleError(_ => Left(CourseError.MicrocredentialServiceUnavailable("connection failed")))
 
+// Retry returns F[Either[CourseError, Status]], which we lift into the Eff monad transformer (EitherT) to preserve the error channel. 
     EitherT(
       Retry
         .retryWithBackoff(attempt, isRetryable, retry.baseDelayMillis, retry.maxAttempts)
@@ -45,7 +44,8 @@ class MicrocredentialClient[F[_]](client: Client[F], baseUrl: String, retry: Ret
         }
     )
 
+// Microcredential service is retryable on connection failures and 5xx, but not 4xx (which are considered permanent errors).
   private def isRetryable(result: Either[CourseError, Status]): Boolean =
     result match
-      case Right(status) => status.code >= 500 // all server errors, incl. 503 Service Unavailable
+      case Right(status) => status.code >= 500 
       case Left(_)       => true

@@ -22,6 +22,7 @@ final case class RabbitStreamConfig(
     password: String,
     exchange: String,
     queue: String,
+    // what are routing keys? They are the specific topics or patterns that the consumer is interested in receiving messages for. In RabbitMQ, routing keys are used to determine how messages are routed from exchanges to queues. Each routing key can represent a specific type of event or message, allowing the consumer to filter and process only the relevant messages.
     routingKeys: List[String]
 )
 

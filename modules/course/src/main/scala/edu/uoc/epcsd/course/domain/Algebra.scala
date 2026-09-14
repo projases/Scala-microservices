@@ -6,7 +6,7 @@ import cats.data.EitherT
 /** Effect alias used across the service layer: `CourseError` on the left channel.
   *  Both the error short-circuit and the effect are threaded in a single `for`-comprehension.
  */
-// What is this type? EitherT is a monad transformer that combines the effects of two monads: Either and F. In this case, it represents a computation that can either result in a CourseError (the left channel) or a successful value of type A (the right channel), while also being wrapped in an effect F (like Future, IO, etc.). This allows for error handling and effectful computations to be composed together in a clean and functional way.
+// EitherT is a monad transformer that combines the effects of two monads: Either and F. In this case, it represents a computation that can either result in a CourseError (the left channel) or a successful value of type A (the right channel), while also being wrapped in an effect F (like Future, IO, etc.). This allows for error handling and effectful computations to be composed together in a clean and functional way.
 type Eff[F[_], A] = EitherT[F, CourseError, A]
 
 object Eff:

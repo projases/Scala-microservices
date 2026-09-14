@@ -18,3 +18,4 @@ project/project/
 *.zip
 
 .DS_Store
+/.agent-shell/

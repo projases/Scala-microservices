@@ -16,12 +16,15 @@ import cats.syntax.all.*
   */
 object Retry:
 
+// each attempt sleeps `baseDelayMillis * 2^attempt` before retrying.
   def backoffDelay(baseDelayMillis: Long, attempt: Int): FiniteDuration =
     FiniteDuration(baseDelayMillis * math.pow(2, attempt.toDouble).toLong, TimeUnit.MILLISECONDS)
 
   /** Run `attempt`, retrying whenever it raised an exception or produced a value for which
     *  `shouldRetry` is true, sleeping `baseDelayMillis * 2^attempt` before each retry.
-    */
+   */
+// F[_] is a Temporal so we can sleep between retries, and raise errors when we exhaust the attempts.
+// A is the type of the result produced by the attempt, which we can inspect to decide whether to retry.
   def retryWithBackoff[F[_], A](
       attempt: F[A],
       shouldRetry: A => Boolean,
@@ -30,8 +33,10 @@ object Retry:
   )(using T: Temporal[F]): F[A] =
     def loop(remaining: Int): F[A] =
       attempt.attempt.flatMap {
+        // if the attempt succeeded (Right(a)) and shouldRetry(a) is true, and we have remaining attempts, then sleep and retry
         case Right(a) if shouldRetry(a) && remaining > 0 =>
           T.sleep(backoffDelay(baseDelayMillis, remaining)) *> loop(remaining - 1)
+        // if the attempt succeeded (Right(a)) and shouldRetry(a) is false, then lift the result into F and return it 
         case Right(a) => a.pure[F]
         case Left(_) if remaining > 0 =>
           T.sleep(backoffDelay(baseDelayMillis, remaining)) *> loop(remaining - 1)
