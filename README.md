@@ -34,8 +34,11 @@ what follows says what is being changed next and why.
 ### Stable today
 
 - 5 services under Docker Compose; RabbitMQ-backed async flow gated by `scripts/smoke-test.sh`.
-- Tagless-final service layers, Doobie repositories, parallel per-enrollment fibers.
-- Unit suites green and warning-clean under `-Wunused:all` (`sbt test`).
+- Tagless-final service layer split by capability: `CourseQueries` (reads, plain `F`),
+  `CourseCommands` (one guarded transition per method), `CourseClosure` (the single
+  orchestrated flow), composed by a thin `CourseService` facade. Doobie repositories,
+  parallel per-enrollment fibers.
+- Unit suites green and warning-clean under `-Wunused:all` (52 course-module tests).
 
 ### Actively being developed
 
@@ -46,11 +49,11 @@ what follows says what is being changed next and why.
   issues it at the repository boundary) from the persisted types (`id: Long`), making
   "updating an unsaved entity" a compile error instead of a runtime exception.
 
-- **Effects-as-Data exploration.** A side-by-side, teaching re-implementation of the
-  course lifecycle as pure reducers returning effect lists, interpreted by an
-  imperative shell. Kept as a comparison artifact to
-  deepen the functional-core / imperative-shell story — not a replacement for the
-  current tagless-final service.
+- **Effect-encoding exploration.** Two side-by-side, teaching re-implementations of the
+  course lifecycle in `patterns/effects-as-data/` (pure reducers + imperative shell) and
+  `patterns/free-monad/` (GADT vocabulary + `Free` programs + multiple interpreters). Kept
+  as comparison artifacts to deepen the functional-core / imperative-shell story — not a
+  replacement for the current tagless-final service.
 
 ## Services
 

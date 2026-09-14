@@ -80,8 +80,10 @@ object Fakes:
     def isInstructor(email: String): IO[Boolean] =
       IO.pure(users.exists(u => u.email == email && u.status == UserType.Instructor))
 
-  final case class FakeMicrocredentialSvc(fail: Boolean = false) extends MicrocredentialService[IO]:
+  final class FakeMicrocredentialSvc(fail: Boolean = false) extends MicrocredentialService[IO]:
+    var requestCount: Int = 0
     def requestMicrocredentials(courseId: Long): Eff[IO, Unit] =
+      requestCount += 1
       if fail then EitherT.leftT(MicrocredentialServiceUnavailable("down"))
       else EitherT.rightT(())
 
@@ -238,6 +240,24 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
     val svc = service(repo, enrollRepo, Fakes.FakeUserService(List(instructor, student)))
     svc.closeCourse(1L).value.map {
       case Left(EnrollmentsNotGraded(courseId)) => assertEquals(courseId, 1L)
+      case other => fail(s"expected EnrollmentsNotGraded, got $other")
+    }
+  }
+
+  test("closeCourse never touches the microcredential service when ungraded") {
+    val course = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val store = newStore(
+      courses = List(course),
+      enrollments = List(
+        Enrollment(Some(10L), "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
+      )
+    )
+    val (repo, enrollRepo) = repos(store)
+    val mc = Fakes.FakeMicrocredentialSvc()
+    val svc = service(repo, enrollRepo, Fakes.FakeUserService(List(instructor, student)), mcSvc = mc)
+    svc.closeCourse(1L).value.map {
+      case Left(EnrollmentsNotGraded(1L)) =>
+        assertEquals(mc.requestCount, 0)
       case other => fail(s"expected EnrollmentsNotGraded, got $other")
     }
   }

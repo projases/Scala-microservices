@@ -15,9 +15,10 @@ import edu.uoc.epcsd.course.service.CreateCourse
   *
   *  Compared to `CourseService` (tagless-final): the workflow logic lives in `Reducers`,
   *  which never touch `F`. This shell only loads whatever the reducer asks for, runs it, and
-  *  executes the returned `Effect`s. Where `CourseService` calls `microcredSvc` *before* the
-  *  "all graded" check, here the reducer refuses to emit `RequestMicrocredentials` from a state
-  *  that is doomed — the close never touches the outside world unless it can succeed.
+  *  executes the returned `Effect`s. `CourseService` now guards before the microcredential
+  *  request too (it was refactored to the same ordering); what still differs is *how* the guard
+  *  is enforced: here the reducer cannot even emit `RequestMicrocredentials` from a state that
+  *  is doomed — the close never touches the outside world unless it can succeed.
   */
 class EffectsAsDataShell[F[_]: Monad](
     clock: Clock[F],
