@@ -8,3 +8,11 @@ project/project/
 .metals/
 .vscode/
 *.log
+.git/
+Gemini/
+.agent-shell/
+docs/
+scripts/
+*.md
+flake.lock
+flake.nix

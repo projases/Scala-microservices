@@ -1,9 +1,10 @@
+# syntax=docker/dockerfile:1
 # Build stage: assemble the service's fat jar with sbt.
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /build
 
 # Install the sbt launcher (launches the sbt version pinned in build.properties).
-RUN curl -fsSL https://github.com/sbt/sbt/releases/download/v1.10.7/sbt-1.10.7.tgz \
+RUN curl -fsSL https://github.com/sbt/sbt/releases/download/v1.12.11/sbt-1.12.11.tgz \
     | tar xz -C /opt \
     && ln -s /opt/sbt/bin/sbt /usr/local/bin/sbt
 
@@ -11,7 +12,10 @@ COPY project/ project/
 COPY build.sbt .
 COPY modules/ modules/
 
-RUN sbt -batch -no-colors "notification/assembly"
+# The coursier and sbt mount caches survive rebuilds and are shared across all images.
+RUN --mount=type=cache,target=/root/.cache/coursier \
+    --mount=type=cache,target=/root/.sbt \
+    sbt -batch -no-colors "notification/assembly"
 
 # Run stage: a slim JRE plus the fat jar and the Docker-aware config.
 FROM eclipse-temurin:21-jre
