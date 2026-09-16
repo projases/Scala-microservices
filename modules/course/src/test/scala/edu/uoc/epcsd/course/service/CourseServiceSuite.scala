@@ -37,7 +37,6 @@ object Fakes:
     def updateCourse(c: Course): IO[Unit] =
       store.courses = store.courses.map(x => if x.id == c.id then c else x)
       IO.unit
-
     def persistGradeReportClosure(course: Course, gradedEnrollments: List[Enrollment]): IO[Unit] =
       applyClosure(course, CourseStatus.PendingClosure, gradedEnrollments, EnrollmentStatus.Graded)
     def persistCourseClosure(course: Course, closedEnrollments: List[Enrollment]): IO[Unit] =
