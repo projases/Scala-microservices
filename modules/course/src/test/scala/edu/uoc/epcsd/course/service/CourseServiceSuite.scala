@@ -19,20 +19,25 @@ import edu.uoc.epcsd.course.domain.CourseError.*
 object Fakes:
 
   final class FakeStore:
-    var courses: Vector[Course]     = Vector.empty
+    var courses: Vector[Course] = Vector.empty
     var enrollments: Vector[Enrollment] = Vector.empty
-    var failNextClosure: Boolean    = false
+    var failNextClosure: Boolean = false
 
   final class FakeCourseRepo(val store: FakeStore) extends CourseRepository[IO]:
+
     def getCourseById(id: Long): IO[Option[Course]] = IO.pure(store.courses.find(_.id == id))
-    def findCourses: IO[List[Course]]               = IO.pure(store.courses.toList)
-    def createCourse(c: NewCourse): IO[Course]         =
+
+    def findCourses: IO[List[Course]] = IO.pure(store.courses.toList)
+
+    def createCourse(c: NewCourse): IO[Course] =
       val next = Course.fromNewCourse((store.courses.size + 1).toLong, c)
       store.courses = store.courses :+ next
       IO.pure(next)
-    def updateCourse(c: Course): IO[Unit]           =
+
+    def updateCourse(c: Course): IO[Unit] =
       store.courses = store.courses.map(x => if x.id == c.id then c else x)
       IO.unit
+
     def persistGradeReportClosure(course: Course, gradedEnrollments: List[Enrollment]): IO[Unit] =
       applyClosure(course, CourseStatus.PendingClosure, gradedEnrollments, EnrollmentStatus.Graded)
     def persistCourseClosure(course: Course, closedEnrollments: List[Enrollment]): IO[Unit] =
@@ -133,7 +138,7 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
     val (repo, enrollRepo) = repos(store)
     val svc = service(repo, enrollRepo, Fakes.FakeUserService(List(instructor)))
     val req = CreateCourse(
-      "instr@uoc.edu", "FP", "desc",
+      "instra@uoc.edu", "FP", "desc",
       LocalDate.of(2026, 1, 1), LocalDate.of(2026, 6, 30),
       "Online", 100, "o", "m", 40, "en", "web"
     )

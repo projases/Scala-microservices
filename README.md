@@ -1,5 +1,7 @@
 # Scala Microservices
 
+[![CI](https://github.com/projases/Scala-microservices/actions/workflows/ci.yml/badge.svg)](https://github.com/projases/Scala-microservices/actions/workflows/ci.yml)
+
 This is a functional approach to my Software Architecture course project at the Universitat Oberta de Catalunya (UOC) -> https://github.com/UOC-EPCSD-ISCSD-SA
 
 Built with Scala 3, Cats Effect, http4s, tapir, and Doobie, following a functional architecture.

@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: sbt unit + suite tests
+    runs-on: ubuntu-latest
+    services:
+      rabbitmq:
+        image: rabbitmq:3.13-management-alpine
+        env:
+          RABBITMQ_DEFAULT_USER: guest
+          RABBITMQ_DEFAULT_PASS: guest
+        ports:
+          - "5672:5672"
+# what is >- ? it means that the following string is a multi-line string, but the newlines will be removed. So it is equivalent to writing the string in one line.
+        options: >- 
+          --health-cmd "rabbitmq-diagnostics -q ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin 
+          java-version: 21
+      - uses: sbt/setup-sbt@v1
+      - name: Cache dependency downloads
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/coursier
+            ~/.ivy2/cache
+            ~/.sbt
+          key: deps-${{ hashFiles('build.sbt', 'project/Dependencies.scala', 'project/plugins.sbt', 'project/build.properties') }}
+          restore-keys: |
+            deps-
+      - name: Compile and run every test
+        run: sbt -batch test
+
+  smoke:
+    name: docker compose smoke test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and start the full stack
+        run: docker compose up --build -d
+      - name: Run the end-to-end smoke test
+        run: |
+          if ! scripts/smoke-test.sh; then
+            echo "::group::notification logs"
+            docker compose logs notification
+            echo "::endgroup::"
+            exit 1
+          fi
+      - name: Tear down the stack
+        if: always()
+        run: docker compose down -v
