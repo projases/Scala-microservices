@@ -66,6 +66,9 @@ services:
       context: .
       dockerfile: modules/productcatalog/Dockerfile
     container_name: scala-course-productcatalog
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     ports:
       - "18081:18081"
 
