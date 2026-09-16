@@ -26,7 +26,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   private val end   = LocalDate.of(2026, 6, 30)
 
   private val baseCourse = Course(
-    id = None, instructor = "instr@uoc.edu",
+    id = 1L, instructor = "instr@uoc.edu",
     title = "FP", description = "desc",
     enrollmentStartDate = start, enrollmentEndDate = end,
     mode = "Online", price = 100, objectives = "o", methology = "m",
@@ -38,7 +38,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   )
 
   private val enrolled =
-    Enrollment(Some(10L), "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
+    Enrollment(10L, "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
 
   private def clockToday: IO[LocalDate] =
     Clock[IO].realTimeInstant.map(i => LocalDate.ofInstant(i, java.time.ZoneOffset.UTC))
@@ -78,7 +78,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
           logging.instructions,
           List("GET isInstructor(instr@uoc.edu)", "GET courses", "INSERT course 'FP'")
         )
-        assertEquals(store.courses.headOption.map(c => (c.id, c.status)), Some((Some(1L), CourseStatus.Draft)))
+        assertEquals(store.courses.headOption.map(c => (c.id, c.status)), Some((1L, CourseStatus.Draft)))
       }
       case Left(err) => fail(s"expected success, got $err")
     }
@@ -93,7 +93,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("createCourse: rejects a duplicate title") {
-    val store  = newStore(courses = List(baseCourse.copy(id = Some(1L), title = "FP")))
+    val store  = newStore(courses = List(baseCourse.copy(id = 1L, title = "FP")))
     Lifecycle.run(Lifecycle.createCourse(req))(interp(store, List(instructor))).flatMap {
       case Left(DuplicateCourseTitle(t)) => IO.pure(assertEquals(t, "FP"))
       case other => IO(fail(s"expected DuplicateCourseTitle, got $other"))
@@ -117,7 +117,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("openEnrollment: DRAFT -> EnrollmentOpen; rejects ACTIVE") {
-    val draft = baseCourse.copy(id = Some(1L))
+    val draft = baseCourse.copy(id = 1L)
     val store = newStore(courses = List(draft))
     val logging = new LoggingInterpreter(interp(store, Nil))
     Lifecycle.run(Lifecycle.openEnrollment(1L, start, end))(logging).flatMap {
@@ -141,7 +141,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("closeEnrollment: EnrollmentOpen -> Active") {
-    val open  = baseCourse.copy(id = Some(1L), status = CourseStatus.EnrollmentOpen)
+    val open  = baseCourse.copy(id = 1L, status = CourseStatus.EnrollmentOpen)
     val store = newStore(courses = List(open))
     Lifecycle.run(Lifecycle.closeEnrollment(1L))(interp(store, Nil)).flatMap {
       case Right(_) => courseStatus(store, 1L).map(s => assertEquals(s, Some(CourseStatus.Active)))
@@ -150,7 +150,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("enrollInCourse: unknown user short-circuits before persisting") {
-    val open  = baseCourse.copy(id = Some(1L), status = CourseStatus.EnrollmentOpen)
+    val open  = baseCourse.copy(id = 1L, status = CourseStatus.EnrollmentOpen)
     val store = newStore(courses = List(open))
     val logging = new LoggingInterpreter(interp(store, Nil))
     Lifecycle.run(Lifecycle.enrollInCourse(1L, "ghost@uoc.edu"))(logging).flatMap {
@@ -164,7 +164,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("enrollInCourse: happy path creates an Active enrollment on the enrollment date") {
-    val open  = baseCourse.copy(id = Some(1L), status = CourseStatus.EnrollmentOpen)
+    val open  = baseCourse.copy(id = 1L, status = CourseStatus.EnrollmentOpen)
     val store = newStore(courses = List(open))
     Lifecycle.run(Lifecycle.enrollInCourse(1L, "student@uoc.edu"))(interp(store, List(student))).flatMap {
       case Right(_) => enrollmentRepo(store).findEnrollmentByCourse(1L).flatMap { es =>
@@ -180,7 +180,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("closeGradeReports: ACTIVE -> PendingClosure; rejects DRAFT") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val store  = newStore(courses = List(active), enrollments = List(enrolled))
     val logging = new LoggingInterpreter(interp(store, Nil))
     Lifecycle.run(Lifecycle.closeGradeReports(1L))(logging).flatMap {
@@ -194,7 +194,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
       }
       case Left(err) => fail(s"expected success, got $err")
     }
-    val draft = baseCourse.copy(id = Some(1L))
+    val draft = baseCourse.copy(id = 1L)
     Lifecycle.run(Lifecycle.closeGradeReports(1L))(interp(newStore(courses = List(draft)))).flatMap {
       case Left(InvalidState(expected, actual)) => IO.pure {
         assertEquals(expected, "course must be ACTIVE to close grade reports")
@@ -205,7 +205,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("closeCourse: guarded before any microcredential call when ungraded") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val store  = newStore(courses = List(active), enrollments = List(enrolled))
     val logging = new LoggingInterpreter(interp(store, List(instructor, student)))
     Lifecycle.run(Lifecycle.closeCourse(1L))(logging).flatMap {
@@ -219,7 +219,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("closeCourse: graded journals Request, Persist, Publish in order") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val graded = List(enrolled.copy(status = EnrollmentStatus.Graded))
     val store  = newStore(courses = List(active), enrollments = graded)
     val logging = new LoggingInterpreter(interp(store, List(instructor, student)))
@@ -243,7 +243,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("closeCourse: microcredential failure stops the script before Persist/Publish and leaves the store untouched") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val graded = List(enrolled.copy(status = EnrollmentStatus.Graded))
     val store  = newStore(courses = List(active), enrollments = graded)
     val events = FakeCourseEventPublisher()
@@ -267,7 +267,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("full lifecycle: open -> enroll -> close -> grade -> close runs end to end") {
-    val store  = newStore(courses = List(baseCourse.copy(id = Some(1L))))
+    val store  = newStore(courses = List(baseCourse.copy(id = 1L)))
     val events = FakeCourseEventPublisher()
     val interpPublishing = interp(store, List(instructor, student), events = events)
     val life = for
@@ -288,7 +288,7 @@ class FreeMonadSuite extends munit.CatsEffectSuite:
   }
 
   test("instruction journal: describe renders the atomic transitions") {
-    val c      = baseCourse.copy(id = Some(1L))
+    val c      = baseCourse.copy(id = 1L)
     val graded = List(enrolled.copy(status = EnrollmentStatus.Graded))
     assertEquals(
       CourseOp.PersistGradeClosure(c.copy(status = CourseStatus.PendingClosure), graded).describe,

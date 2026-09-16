@@ -64,8 +64,7 @@ object RabbitCourseEventPublisher:
   private final class RabbitCourseEventPublisher[F[_]](events: Queue[F, CourseClosed])
       extends CourseEventPublisher[F]:
     def publishClosed(course: Course): F[Unit] =
-      val courseId = course.id.getOrElse(throw new IllegalStateException("Cannot publish a Course with no id"))
-      events.offer(CourseClosed(courseId, course.title))
+      events.offer(CourseClosed(course.id, course.title))
 
   private def drain[F[_]: Async](
       events: Queue[F, CourseClosed],

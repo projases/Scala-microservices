@@ -25,7 +25,7 @@ class CourseCommands[F[_]: Monad](
   def createCourse(req: CreateCourse): Eff[F, Long] =
     for
       course <- fromEither(
-        Course
+        NewCourse
           .fromRequest(
             req.instructor, req.title, req.description,
             req.enrollmentStartDate, req.enrollmentEndDate,
@@ -40,9 +40,7 @@ class CourseCommands[F[_]: Monad](
       _        <- ensure(!courses.exists(_.title == course.title),
                     CourseError.DuplicateCourseTitle(course.title))
       saved    <- liftF(courseRepo.createCourse(course))
-    yield saved.id.getOrElse(
-      throw new IllegalStateException("createCourse must persist a Course with an id")
-    )
+    yield saved.id
 
   def modifyCourseDetails(courseId: Long, req: CourseRequestUpdate): Eff[F, Unit] =
     for
@@ -88,7 +86,7 @@ class CourseCommands[F[_]: Monad](
       _       <- fromOption(userOpt, CourseError.UserNotFound(email, isInstructor = false))
       today   <- liftF(clock.realTimeInstant.map(i => LocalDate.ofInstant(i, java.time.ZoneOffset.UTC)))
       _       <- liftF(enrollmentRepo.createEnrollment(
-                   Enrollment(None, email, today, 0L, EnrollmentStatus.Active, courseId)))
+                   NewEnrollment(email, today, 0L, EnrollmentStatus.Active, courseId)))
     yield ()
 
   def closeGradeReports(courseId: Long): Eff[F, Unit] =

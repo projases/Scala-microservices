@@ -24,10 +24,10 @@ object Fakes:
     var failNextClosure: Boolean    = false
 
   final class FakeCourseRepo(val store: FakeStore) extends CourseRepository[IO]:
-    def getCourseById(id: Long): IO[Option[Course]] = IO.pure(store.courses.find(_.id.contains(id)))
+    def getCourseById(id: Long): IO[Option[Course]] = IO.pure(store.courses.find(_.id == id))
     def findCourses: IO[List[Course]]               = IO.pure(store.courses.toList)
-    def createCourse(c: Course): IO[Course]         =
-      val next = c.copy(id = Some((store.courses.size + 1).toLong))
+    def createCourse(c: NewCourse): IO[Course]         =
+      val next = Course.fromNewCourse((store.courses.size + 1).toLong, c)
       store.courses = store.courses :+ next
       IO.pure(next)
     def updateCourse(c: Course): IO[Unit]           =
@@ -53,9 +53,9 @@ object Fakes:
       else
         val updatedCourse   =
           store.courses.map(x => if x.id == course.id then course.copy(status = courseStatus) else x)
-        val gradedIds       = enrollments.flatMap(_.id).toSet
+        val gradedIds       = enrollments.map(_.id).toSet
         val updatedEnrolls  =
-          store.enrollments.map(e => if e.id.exists(gradedIds.contains) then e.copy(status = enrollmentStatus) else e)
+          store.enrollments.map(e => if gradedIds.contains(e.id) then e.copy(status = enrollmentStatus) else e)
         store.courses = updatedCourse
         store.enrollments = updatedEnrolls
         IO.unit
@@ -65,9 +65,9 @@ object Fakes:
       IO.pure(store.enrollments.filter(_.courseId == courseId).toList)
     def findEnrollmentByStudent(email: String): IO[Option[Enrollment]] =
       IO.pure(store.enrollments.find(_.student == email))
-    def getEnrollmentById(id: Long): IO[Option[Enrollment]] = IO.pure(store.enrollments.find(_.id.contains(id)))
-    def createEnrollment(e: Enrollment): IO[Enrollment]     =
-      val next = e.copy(id = Some((store.enrollments.size + 1).toLong))
+    def getEnrollmentById(id: Long): IO[Option[Enrollment]] = IO.pure(store.enrollments.find(_.id == id))
+    def createEnrollment(e: NewEnrollment): IO[Enrollment] =
+      val next = Enrollment.fromNewEnrollment((store.enrollments.size + 1).toLong, e)
       store.enrollments = store.enrollments :+ next
       IO.pure(next)
     def updateEnrollment(e: Enrollment): IO[Unit]           =
@@ -90,8 +90,7 @@ object Fakes:
   final case class FakeCourseEventPublisher(var closed: List[CourseClosed] = Nil)
       extends CourseEventPublisher[IO]:
     def publishClosed(course: Course): IO[Unit] =
-      val courseId = course.id.getOrElse(throw new IllegalStateException("expected persisted course"))
-      IO { closed = closed :+ CourseClosed(courseId, course.title) }
+      IO { closed = closed :+ CourseClosed(course.id, course.title) }
 
 /** Coursier-test suite for the pure service logic: success + short-circuit paths. */
 class CourseServiceSuite extends munit.CatsEffectSuite:
@@ -100,7 +99,7 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   private val student    = User(2L, "Alum", "student@uoc.edu", "456", UserType.Student)
 
   private val baseCourse = Course(
-    id = None, instructor = "instr@uoc.edu",
+    id = 1L, instructor = "instr@uoc.edu",
     title = "FP", description = "desc",
     enrollmentStartDate = LocalDate.of(2026, 1, 1),
     enrollmentEndDate   = LocalDate.of(2026, 6, 30),
@@ -141,7 +140,7 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
     svc.createCourse(req).value.map {
       case Right(id) =>
         assertEquals(id, 1L)
-        assertEquals(store.courses.headOption.map(c => (c.id, c.status)), Some((Some(1L), CourseStatus.Draft)))
+        assertEquals(store.courses.headOption.map(c => (c.id, c.status)), Some((1L, CourseStatus.Draft)))
       case Left(_) => fail("expected success")
     }
   }
@@ -158,7 +157,7 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("createCourse rejects a duplicate title") {
-    val existing = baseCourse.copy(id = Some(1L), title = "FP", status = CourseStatus.Active)
+    val existing = baseCourse.copy(id = 1L, title = "FP", status = CourseStatus.Active)
     val store = newStore(courses = List(existing))
     val (repo, enrollRepo) = repos(store)
     val svc = service(repo, enrollRepo, Fakes.FakeUserService(List(instructor)))
@@ -170,7 +169,7 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("openEnrollment only from DRAFT; short-circuits from ACTIVE") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val store = newStore(courses = List(active))
     val (repo, enrollRepo) = repos(store)
     val svc = service(repo, enrollRepo, Fakes.FakeUserService(Nil))
@@ -183,7 +182,7 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("full lifecycle: open -> enroll -> close -> grade -> close course publishes CourseClosed") {
-    val draft = baseCourse.copy(id = Some(1L))
+    val draft = baseCourse.copy(id = 1L)
     val store = newStore(courses = List(draft))
     val (courseRepo, enrollRepo) = repos(store)
     val events = Fakes.FakeCourseEventPublisher()
@@ -212,7 +211,7 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("closeCourse fails cleanly when the microcredential service is down") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val store = newStore(courses = List(active))
     val (repo, enrollRepo) = repos(store)
     val events = Fakes.FakeCourseEventPublisher()
@@ -229,11 +228,11 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("closeCourse rejects when not all enrollments are graded") {
-    val course = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val course = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val store = newStore(
       courses = List(course),
       enrollments = List(
-        Enrollment(Some(10L), "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
+        Enrollment(10L, "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
       )
     )
     val (repo, enrollRepo) = repos(store)
@@ -245,11 +244,11 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("closeCourse never touches the microcredential service when ungraded") {
-    val course = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val course = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val store = newStore(
       courses = List(course),
       enrollments = List(
-        Enrollment(Some(10L), "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
+        Enrollment(10L, "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
       )
     )
     val (repo, enrollRepo) = repos(store)
@@ -263,13 +262,13 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("getEnrolledStudents keeps enrollment order and drops unknown users") {
-    val draft = baseCourse.copy(id = Some(1L))
+    val draft = baseCourse.copy(id = 1L)
     val store = newStore(
       courses = List(draft),
       enrollments = List(
-        Enrollment(Some(1L), "student@uoc.edu", LocalDate.of(2026, 3, 1), 0L, EnrollmentStatus.Active, 1L),
-        Enrollment(Some(2L), "ghost@uoc.edu",    LocalDate.of(2026, 3, 2), 0L, EnrollmentStatus.Active, 1L),
-        Enrollment(Some(3L), "instr@uoc.edu",    LocalDate.of(2026, 3, 3), 0L, EnrollmentStatus.Active, 1L)
+        Enrollment(1L, "student@uoc.edu", LocalDate.of(2026, 3, 1), 0L, EnrollmentStatus.Active, 1L),
+        Enrollment(2L, "ghost@uoc.edu",    LocalDate.of(2026, 3, 2), 0L, EnrollmentStatus.Active, 1L),
+        Enrollment(3L, "instr@uoc.edu",    LocalDate.of(2026, 3, 3), 0L, EnrollmentStatus.Active, 1L)
       )
     )
     val (courseRepo, enrollRepo) = repos(store)
@@ -280,7 +279,7 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("enrollInCourse rejects unknown user") {
-    val open = baseCourse.copy(id = Some(1L), status = CourseStatus.EnrollmentOpen)
+    val open = baseCourse.copy(id = 1L, status = CourseStatus.EnrollmentOpen)
     val store = newStore(courses = List(open))
     val (repo, enrollRepo) = repos(store)
     val svc = service(repo, enrollRepo, Fakes.FakeUserService(Nil))
@@ -291,11 +290,11 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
   }
 
   test("closeCourse rolls back atomically when the closure commit fails") {
-    val course = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val course = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val store = newStore(
       courses = List(course),
       enrollments = List(
-        Enrollment(Some(10L), "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Graded, 1L)
+        Enrollment(10L, "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Graded, 1L)
       )
     )
     val (courseRepo, enrollRepo) = repos(store)

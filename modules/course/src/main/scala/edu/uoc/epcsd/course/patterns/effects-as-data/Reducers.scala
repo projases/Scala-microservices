@@ -10,15 +10,13 @@ object Reducers:
   private def ensure(cond: Boolean, err: CourseError): Either[CourseError, Unit] =
     if cond then Right(()) else Left(err)
 
-  private def courseId(c: Course): Long = c.id.getOrElse(0L)
-
   def createCourse(
       req: CreateCourse,
       instructor: Option[User],
       existing: List[Course]
-  ): Either[CourseError, Transition[Course]] =
+  ): Either[CourseError, Transition[NewCourse]] =
     for
-      course <- Course
+      course <- NewCourse
                   .fromRequest(
                     req.instructor, req.title, req.description,
                     req.enrollmentStartDate, req.enrollmentEndDate,
@@ -62,13 +60,13 @@ object Reducers:
       email: String,
       user: Option[User],
       today: LocalDate
-  ): Either[CourseError, Transition[Enrollment]] =
+  ): Either[CourseError, Transition[NewEnrollment]] =
     for
       _ <- ensure(course.status == CourseStatus.EnrollmentOpen,
                   CourseError.InvalidState("course must be ENROLLMENT_OPEN to enroll", course.status.toString))
       _ <- ensure(user.isDefined, CourseError.UserNotFound(email, isInstructor = false))
     yield
-      val draft = Enrollment(None, email, today, 0L, EnrollmentStatus.Active, courseId(course))
+      val draft = NewEnrollment(email, today, 0L, EnrollmentStatus.Active, course.id)
       Transition(draft, List(Effect.CreateEnrollment(draft)))
 
   def closeGradeReports(
@@ -88,14 +86,14 @@ object Reducers:
   ): Either[CourseError, Transition[Unit]] =
     for
       _ <- ensure(enrollments.forall(_.status == EnrollmentStatus.Graded),
-                  CourseError.EnrollmentsNotGraded(courseId(course)))
+                  CourseError.EnrollmentsNotGraded(course.id))
     yield
       val closed       = enrollments.map(_.copy(status = EnrollmentStatus.Closed))
       val courseClosed = course.copy(status = CourseStatus.Closed)
       Transition(
         (),
         List(
-          Effect.RequestMicrocredentials(courseId(course)),
+          Effect.RequestMicrocredentials(course.id),
           Effect.PersistCourseClosure(courseClosed, closed),
           Effect.PublishCourseClosed(courseClosed)
         )

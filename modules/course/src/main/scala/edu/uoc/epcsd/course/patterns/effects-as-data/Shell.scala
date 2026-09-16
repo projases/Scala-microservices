@@ -35,7 +35,7 @@ class EffectsAsDataShell[F[_]: Monad](
       existing   <- courseRepo.findCourses
       result     <- Reducers.createCourse(req, instructor, existing) match
         case Left(err) => Monad[F].pure(Left(err))
-        case Right(t)  => courseRepo.createCourse(t.next).map(c => Right(idOf(c)))
+        case Right(t)  => courseRepo.createCourse(t.next).map(c => Right(c.id))
     yield result
 
   def openEnrollment(courseId: Long, start: LocalDate, end: LocalDate): F[Either[CourseError, Unit]] =
@@ -105,7 +105,3 @@ class EffectsAsDataShell[F[_]: Monad](
 
   private def today: F[LocalDate] =
     clock.realTimeInstant.map(i => LocalDate.ofInstant(i, java.time.ZoneOffset.UTC))
-
-  private def idOf(c: Course): Long = c.id.getOrElse(
-    throw new IllegalStateException("CreateCourse must persist a Course with an id")
-  )

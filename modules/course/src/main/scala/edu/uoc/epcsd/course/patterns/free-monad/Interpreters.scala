@@ -39,9 +39,9 @@ final class DoobieInterpreter[F[_]: Monad](
     case FetchCourse(id)                 => courseRepo.getCourseById(id)
     case FetchEnrollments(courseId)      => enrollmentRepo.findEnrollmentByCourse(courseId)
     case FetchUser(email)                => userSvc.getUserByEmail(email)
-    case PersistCourse(c)                => courseRepo.createCourse(c).map(c => idOf(c))
+    case PersistCourse(c)                => courseRepo.createCourse(c).map(_.id)
     case UpdateCourse(c)                 => courseRepo.updateCourse(c)
-    case PersistEnrollment(e)            => enrollmentRepo.createEnrollment(e).map(e => idOf(e))
+    case PersistEnrollment(e)            => enrollmentRepo.createEnrollment(e).map(_.id)
     case PersistGradeClosure(c, es)      => courseRepo.persistGradeReportClosure(c, es)
     case PersistCourseClosure(c, es)     => courseRepo.persistCourseClosure(c, es)
     case RequestMicrocredentials(id)     => microcredSvc.requestMicrocredentials(id).value
@@ -50,14 +50,6 @@ final class DoobieInterpreter[F[_]: Monad](
 
   private def today: F[LocalDate] =
     clock.realTimeInstant.map(i => LocalDate.ofInstant(i, java.time.ZoneOffset.UTC))
-
-  private def idOf(c: Course): Long = c.id.getOrElse(
-    throw new IllegalStateException("CreateCourse must persist a Course with an id")
-  )
-
-  private def idOf(e: Enrollment): Long = e.id.getOrElse(
-    throw new IllegalStateException("CreateEnrollment must persist an Enrollment with an id")
-  )
 
 /** The third interpreter — the payoff of the initial encoding. It journals every instruction
   *  (via `describe`) then delegates to any target natural transformation. Folding a program with

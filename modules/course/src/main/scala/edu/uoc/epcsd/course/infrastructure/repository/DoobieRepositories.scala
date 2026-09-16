@@ -51,7 +51,7 @@ class DoobieCourseRepository[F[_]](xa: Transactor[F])(using F: MonadCancel[F, Th
       .to[List]
       .transact(xa)
 
-  def createCourse(c: Course): F[Course] =
+  def createCourse(c: NewCourse): F[Course] =
     // Insert a new course into the database using a SQL INSERT statement. The `withUniqueGeneratedKeys[Long]("id")` method retrieves the generated ID after the insert operation.
     val insert =
       sql"""INSERT INTO course
@@ -60,8 +60,8 @@ class DoobieCourseRepository[F[_]](xa: Transactor[F])(using F: MonadCancel[F, Th
                     ${c.mode}, ${c.price}, ${c.objectives}, ${c.methology}, ${c.duration},
                     ${c.language}, ${c.location}, ${c.status})
          """.update.withUniqueGeneratedKeys[Long]("id")
-  // Run the insert operation within a transaction and map the generated ID to create a new Course instance with the assigned ID.
-    insert.transact(xa).map(id => c.copy(id = Some(id)))
+  // Run the insert operation within a transaction and map the generated ID onto the draft, closing the draft/persisted seam at the repository boundary.
+    insert.transact(xa).map(id => Course.fromNewCourse(id, c))
 
   def updateCourse(c: Course): F[Unit] =
     updateCourseSql(c).transact(xa)
@@ -94,29 +94,21 @@ class DoobieCourseRepository[F[_]](xa: Transactor[F])(using F: MonadCancel[F, Th
             enrollmentstartdate=${c.enrollmentStartDate}, enrollmentenddate=${c.enrollmentEndDate},
             mode=${c.mode}, price=${c.price}, objectives=${c.objectives}, methology=${c.methology},
             duration=${c.duration}, language=${c.language}, location=${c.location}, status=${c.status}
-          WHERE id = ${courseId(c)}
+          WHERE id = ${c.id}
        """.update.run.void
 
-  // update single enrrolment.
-  // private def updateEnrollmentStatusSql(e: Enrollment, status: EnrollmentStatus): ConnectionIO[Unit] =
-  //   sql"""UPDATE enrollment SET status = $status WHERE id = ${enrollmentId(e)}""".update.run.void
+ // update single enrrolment.
+ // private def updateEnrollmentStatusSql(e: Enrollment, status: EnrollmentStatus): ConnectionIO[Unit] =
+ //   sql"""UPDATE enrollment SET status = $status WHERE id = ${e.id}""".update.run.void
 
  /// update batch of enrollments using ANY 
   private def updateEnrollmentStatusesSql(enrollments: List[Enrollment], status: EnrollmentStatus): ConnectionIO[Unit] =
-    val ids = enrollments.map(enrollmentId)
+    val ids = enrollments.map(_.id)
     sql"""UPDATE enrollment SET status = $status WHERE id = ANY($ids)""".update.run.void 
 
 
-  private def courseId(c: Course): Long = c.id.getOrElse(
-    throw new IllegalStateException("Cannot persist a Course with no id")
-  )
-
-  private def enrollmentId(e: Enrollment): Long = e.id.getOrElse(
-    throw new IllegalStateException("Cannot persist an Enrollment with no id")
-  )
-
   private def toCourse(t: (Long, String, String, String, LocalDate, LocalDate, String, Long, String, String, Long, String, String, CourseStatus)): Course =
-    Course(Some(t._1), t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, t._10, t._11, t._12, t._13, t._14)
+    Course(t._1, t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, t._10, t._11, t._12, t._13, t._14)
 
 /** Doobie interpreter for EnrollmentRepository. */
 // Why MonadCancel? Because we want to be able to cancel the database operations if needed, and MonadCancel provides the necessary capabilities for that. It allows us to work with effects that can be canceled, which is important for long-running or potentially blocking operations like database queries.
@@ -147,23 +139,19 @@ class DoobieEnrollmentRepository[F[_]](xa: Transactor[F])(using F: MonadCancel[F
       .option
       .transact(xa)
 
-  def createEnrollment(e: Enrollment): F[Enrollment] =
+  def createEnrollment(e: NewEnrollment): F[Enrollment] =
     val insert =
       sql"""INSERT INTO enrollment (student, enrollmentdate, qualification, status, course_id)
             VALUES (${e.student}, ${e.enrollmentDate}, ${e.qualification}, ${e.status}, ${e.courseId})
          """.update.withUniqueGeneratedKeys[Long]("id")
-    insert.transact(xa).map(id => e.copy(id = Some(id)))
+    insert.transact(xa).map(id => Enrollment.fromNewEnrollment(id, e))
 
   def updateEnrollment(e: Enrollment): F[Unit] =
     sql"""UPDATE enrollment SET
             student=${e.student}, enrollmentdate=${e.enrollmentDate},
             qualification=${e.qualification}, status=${e.status}, course_id=${e.courseId}
-          WHERE id = ${enrollmentId(e)}
+          WHERE id = ${e.id}
        """.update.run.transact(xa).void
 
-  private def enrollmentId(e: Enrollment): Long = e.id.getOrElse(
-    throw new IllegalStateException("Cannot persist an Enrollment with no id")
-  )
-
   private def toEnrollment(t: (Long, String, LocalDate, Long, EnrollmentStatus, Long)): Enrollment =
-    Enrollment(Some(t._1), t._2, t._3, t._4, t._5, t._6)
+    Enrollment(t._1, t._2, t._3, t._4, t._5, t._6)

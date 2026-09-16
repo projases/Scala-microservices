@@ -34,7 +34,7 @@ object Lifecycle:
   def createCourse(req: CreateCourse): Program[Long] =
     for
       course  <- fromEither(
-        Course
+        NewCourse
           .fromRequest(
             req.instructor, req.title, req.description,
             req.enrollmentStartDate, req.enrollmentEndDate,
@@ -83,7 +83,7 @@ object Lifecycle:
       _       <- fromOption(userOpt, CourseError.UserNotFound(email, isInstructor = false))
       today   <- lift(Tick)
       _       <- lift(PersistEnrollment(
-                   Enrollment(None, email, today, 0L, EnrollmentStatus.Active, courseId)))
+                   NewEnrollment(email, today, 0L, EnrollmentStatus.Active, courseId)))
     yield ()
 
   def closeGradeReports(courseId: Long): Program[Unit] =

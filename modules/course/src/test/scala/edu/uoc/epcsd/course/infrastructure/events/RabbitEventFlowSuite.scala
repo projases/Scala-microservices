@@ -65,7 +65,7 @@ class RabbitEventFlowSuite extends CatsEffectSuite:
         }
         .use { pub =>
           val closedCourse = Course(
-            id = Some(7L), instructor = "instr@uoc.edu",
+            id = 7L, instructor = "instr@uoc.edu",
             title = "Night Photography", description = "d",
             enrollmentStartDate = java.time.LocalDate.of(2026, 1, 1),
             enrollmentEndDate = java.time.LocalDate.of(2026, 6, 30),

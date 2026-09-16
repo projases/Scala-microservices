@@ -34,7 +34,7 @@ trait MicrocredentialRepository[F[_]]:
     *  when the row was created, or `None` when it already existed (atomic `ON CONFLICT DO NOTHING`,
     *  so it is safe under concurrency and retries).
     */
-  def createIfAbsent(m: Microcredential): F[Option[Long]]
+  def createIfAbsent(m: NewMicrocredential): F[Option[Long]]
 
   def update(m: Microcredential): F[Unit]
   def getPendingRequests: F[List[Microcredential]]

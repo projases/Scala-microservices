@@ -21,7 +21,7 @@ import DoobieMappings.given
 class DoobieMicrocredentialRepository[F[_]](xa: Transactor[F])(using F: MonadCancel[F, Throwable])
     extends MicrocredentialRepository[F]:
 
-  private type Row = (Option[Long], Instant, Option[Instant], MicrocredentialStatus, String, Long)
+  private type Row = (Long, Instant, Option[Instant], MicrocredentialStatus, String, Long)
 
   private def fromRow(r: Row): Microcredential =
     Microcredential(r._1, r._2, r._3, r._4, r._5, r._6)
@@ -46,7 +46,7 @@ class DoobieMicrocredentialRepository[F[_]](xa: Transactor[F])(using F: MonadCan
     *  when an enrollment already holds one. Relies on the `uq_microcredential_enrollment` unique
     *  constraint (V2 migration), so concurrent/retried calls cannot double-insert.
     */
-  def createIfAbsent(m: Microcredential): F[Option[Long]] =
+  def createIfAbsent(m: NewMicrocredential): F[Option[Long]] =
     sql"""INSERT INTO microcredential (submitdate, assignmentdate, status, content, enrollment)
           VALUES (${m.submitDate}, ${m.assignmentDate}, ${m.status}, ${m.content}, ${m.enrollment})
           ON CONFLICT (enrollment) DO NOTHING
@@ -59,14 +59,11 @@ class DoobieMicrocredentialRepository[F[_]](xa: Transactor[F])(using F: MonadCan
     sql"""UPDATE microcredential SET
             submitdate=${m.submitDate}, assignmentdate=${m.assignmentDate},
             status=${m.status}, content=${m.content}, enrollment=${m.enrollment}
-          WHERE id = ${idOf(m)}"""
+          WHERE id = ${m.id}"""
       .update
       .run
       .transact(xa)
       .void
- // safeguard because of using `Option[Long]` for id, if the id is None, we don't want to update anything, so we can just return a unit.
-  private def idOf(m: Microcredential): Long =
-    m.id.getOrElse(throw new IllegalStateException("Cannot persist a Microcredential with no id"))
 
   def getPendingRequests: F[List[Microcredential]] =
     sql"""SELECT id, submitdate, assignmentdate, status, content, enrollment

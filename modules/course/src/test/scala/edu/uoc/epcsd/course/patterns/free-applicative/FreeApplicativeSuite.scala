@@ -28,9 +28,9 @@ class FreeApplicativeSuite extends munit.CatsEffectSuite:
   private val student    = User(2L, "Alum", "student@uoc.edu", "456", UserType.Student)
 
   private val enrolled = List(
-    Enrollment(Some(10L), "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L),
-    Enrollment(Some(11L), "instr@uoc.edu",  LocalDate.of(2026, 5, 2), 0L, EnrollmentStatus.Active, 1L),
-    Enrollment(Some(12L), "ghost@uoc.edu",  LocalDate.of(2026, 5, 3), 0L, EnrollmentStatus.Active, 1L)
+    Enrollment(10L, "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L),
+    Enrollment(11L, "instr@uoc.edu",  LocalDate.of(2026, 5, 2), 0L, EnrollmentStatus.Active, 1L),
+    Enrollment(12L, "ghost@uoc.edu",  LocalDate.of(2026, 5, 3), 0L, EnrollmentStatus.Active, 1L)
   )
 
   private val emails = List("student@uoc.edu", "instr@uoc.edu", "ghost@uoc.edu")

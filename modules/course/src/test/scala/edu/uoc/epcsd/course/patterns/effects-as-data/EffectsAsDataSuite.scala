@@ -25,7 +25,15 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   private val end   = LocalDate.of(2026, 6, 30)
 
   private val baseCourse = Course(
-    id = None, instructor = "instr@uoc.edu",
+    id = 1L, instructor = "instr@uoc.edu",
+    title = "FP", description = "desc",
+    enrollmentStartDate = start, enrollmentEndDate = end,
+    mode = "Online", price = 100, objectives = "o", methology = "m",
+    duration = 40, language = "en", location = "web", status = CourseStatus.Draft
+  )
+
+  private val newBaseCourse = NewCourse(
+    instructor = "instr@uoc.edu",
     title = "FP", description = "desc",
     enrollmentStartDate = start, enrollmentEndDate = end,
     mode = "Online", price = 100, objectives = "o", methology = "m",
@@ -37,7 +45,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   )
 
   private val enrolled =
-    Enrollment(Some(10L), "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
+    Enrollment(10L, "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
 
   private def newStore(
       courses: List[Course] = Nil,
@@ -52,13 +60,13 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
     val t = Reducers.createCourse(req, Some(instructor), Nil)
     assertEquals(
       t.map(x => (x.next.status, x.next.title, x.effects)),
-      Right((CourseStatus.Draft, "FP", List(Effect.CreateCourse(baseCourse.copy(id = None)))))
+      Right((CourseStatus.Draft, "FP", List(Effect.CreateCourse(newBaseCourse))))
     )
   }
 
   test("createCourse reducer: rejects non-instructor and duplicate title") {
     assertEquals(Reducers.createCourse(req, None, Nil), Left(InstructorNotFound("instr@uoc.edu")))
-    val existing = baseCourse.copy(id = Some(1L), title = "FP")
+    val existing = baseCourse.copy(id = 1L, title = "FP")
     assertEquals(
       Reducers.createCourse(req, Some(instructor), List(existing)),
       Left(DuplicateCourseTitle("FP"))
@@ -77,7 +85,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   }
 
   test("openEnrollment reducer: DRAFT -> EnrollmentOpen, rejects ACTIVE") {
-    val draft = baseCourse.copy(id = Some(1L))
+    val draft = baseCourse.copy(id = 1L)
     assertEquals(
       Reducers.openEnrollment(draft, start, end).map(_.effects),
       Right(List(Effect.UpdateCourse(draft.copy(status = CourseStatus.EnrollmentOpen))))
@@ -90,7 +98,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   }
 
   test("closeEnrollment reducer: EnrollmentOpen -> Active") {
-    val open = baseCourse.copy(id = Some(1L), status = CourseStatus.EnrollmentOpen)
+    val open = baseCourse.copy(id = 1L, status = CourseStatus.EnrollmentOpen)
     assertEquals(
       Reducers.closeEnrollment(open).map(_.effects),
       Right(List(Effect.UpdateCourse(open.copy(status = CourseStatus.Active))))
@@ -98,7 +106,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   }
 
   test("enrollInCourse reducer: unknown user short-circuits before effects") {
-    val open = baseCourse.copy(id = Some(1L), status = CourseStatus.EnrollmentOpen)
+    val open = baseCourse.copy(id = 1L, status = CourseStatus.EnrollmentOpen)
     assertEquals(
       Reducers.enrollInCourse(open, "ghost@uoc.edu", None, start),
       Left(UserNotFound("ghost@uoc.edu", isInstructor = false))
@@ -107,14 +115,14 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
     assertEquals(
       t.map(x => (x.next.student, x.next.enrollmentDate, x.next.courseId, x.effects)),
       Right(("student@uoc.edu", LocalDate.of(2026, 5, 1), 1L, List(Effect.CreateEnrollment(
-        Enrollment(None, "student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
+        NewEnrollment("student@uoc.edu", LocalDate.of(2026, 5, 1), 0L, EnrollmentStatus.Active, 1L)
       ))))
     )
   }
 
   test("closeGradeReports reducer: ACTIVE -> PendingClosure in the effect payload") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
-    val draft  = baseCourse.copy(id = Some(1L))
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
+    val draft  = baseCourse.copy(id = 1L)
     assertEquals(
       Reducers.closeGradeReports(draft, Nil),
       Left(InvalidState("course must be ACTIVE to close grade reports", CourseStatus.Draft.toString))
@@ -130,7 +138,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   }
 
   test("closeCourse reducer: refuses to emit microcredential request when ungraded") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     assertEquals(
       Reducers.closeCourse(active, List(enrolled)),
       Left(EnrollmentsNotGraded(1L))
@@ -138,7 +146,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   }
 
   test("closeCourse reducer: graded -> Request, Persist, Publish in order") {
-    val active     = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active     = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val graded     = List(enrolled.copy(status = EnrollmentStatus.Graded))
     val closed     = List(enrolled.copy(status = EnrollmentStatus.Closed))
     val courseTerm = active.copy(status = CourseStatus.Closed)
@@ -153,7 +161,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   }
 
   test("effect journal: describe renders the atomic transitions") {
-    val c      = baseCourse.copy(id = Some(1L))
+    val c      = baseCourse.copy(id = 1L)
     val graded = List(enrolled.copy(status = EnrollmentStatus.Graded))
     assertEquals(
       Effect.PersistGradeClosure(c.copy(status = CourseStatus.PendingClosure), graded).describe,
@@ -172,7 +180,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
       EitherT.rightT(())
 
   test("shell: full lifecycle runs the effects end to end") {
-    val store = newStore(courses = List(baseCourse.copy(id = Some(1L))))
+    val store = newStore(courses = List(baseCourse.copy(id = 1L)))
     val svc = new EffectsAsDataShell[IO](
       Clock[IO],
       new Fakes.FakeCourseRepo(store),
@@ -203,7 +211,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   }
 
   test("shell: microcredential failure leaves the store at ACTIVE and emits no event") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val store  = newStore(
       courses = List(active),
       enrollments = List(enrolled.copy(status = EnrollmentStatus.Graded))
@@ -229,7 +237,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
   }
 
   test("shell: closeCourse never calls the microcredential service when ungraded") {
-    val active = baseCourse.copy(id = Some(1L), status = CourseStatus.Active)
+    val active = baseCourse.copy(id = 1L, status = CourseStatus.Active)
     val store  = newStore(courses = List(active), enrollments = List(enrolled))
     val mc     = new CountingMicrocredSvc
     val svc = new EffectsAsDataShell[IO](
@@ -260,7 +268,7 @@ class EffectsAsDataSuite extends munit.CatsEffectSuite:
       case Right(id) =>
         IO.pure {
           assertEquals(id, 1L)
-          assertEquals(store.courses.headOption.map(c => (c.id, c.status)), Some((Some(1L), CourseStatus.Draft)))
+          assertEquals(store.courses.headOption.map(c => (c.id, c.status)), Some((1L, CourseStatus.Draft)))
         }
       case Left(err) => fail(s"expected success, got $err")
     }

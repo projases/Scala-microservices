@@ -38,22 +38,23 @@ what follows says what is being changed next and why.
   `CourseCommands` (one guarded transition per method), `CourseClosure` (the single
   orchestrated flow), composed by a thin `CourseService` facade. Doobie repositories,
   parallel per-enrollment fibers.
-- Unit suites green and warning-clean under `-Wunused:all` (52 course-module tests).
+- Unit suites green and warning-clean under `-Wunused:all` (57 course-module tests).
+
+- "Draft vs persisted" domain modeling across all three modules: `NewCourse` /
+  `NewEnrollment` / `NewMicrocredential` have no `id` and exist only before persistence;
+  `create*` issues the id at the repository boundary (`withUniqueGeneratedKeys` /
+  `RETURNING id`). The persisted types carry `id: Long`, so "updating an unsaved entity"
+  is now a compile error instead of a runtime `getOrElse(throw ...)` guard. Microcredential
+  suites green too (11 tests).
 
 ### Actively being developed
 
-- **Domain modeling — "draft vs persisted" split.** `Course`, `Enrollment` and
-  `Microcredential` still carry `id: Option[Long]`, forcing every update / event publish
-  to unwrap the id at runtime (`getOrElse(throw ...)` guards). The decided fix is to
-  separate `NewCourse` / `NewEnrollment` / `NewMicrocredential` (no `id` field; `create`
-  issues it at the repository boundary) from the persisted types (`id: Long`), making
-  "updating an unsaved entity" a compile error instead of a runtime exception.
-
-- **Effect-encoding exploration.** Two side-by-side, teaching re-implementations of the
-  course lifecycle in `patterns/effects-as-data/` (pure reducers + imperative shell) and
-  `patterns/free-monad/` (GADT vocabulary + `Free` programs + multiple interpreters). Kept
+- **Effect-encoding exploration.** Three side-by-side, teaching re-implementations of the
+  course lifecycle in `patterns/effects-as-data/` (pure reducers + imperative shell),
+  `patterns/free-monad/` (GADT vocabulary + `Free` programs + multiple interpreters) and
+  `patterns/free-applicative/` (static read fan-out + parallel `Applicative` folding). Kept
   as comparison artifacts to deepen the functional-core / imperative-shell story — not a
-  replacement for the current tagless-final service.
+  replacement for the current tagless-final service. 
 
 ## Services
 

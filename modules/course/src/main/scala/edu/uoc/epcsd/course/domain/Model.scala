@@ -24,9 +24,71 @@ enum UserType:
 object UserType:
   given Codec[UserType] = Codecs.upperSnakeCodec(values)
 
-/** A course. Immutable; state transitions are expressed via `copy`. */
+/** An unsaved course draft: no `id` yet, because the database has not assigned one.
+  *  `create` at the repository boundary issues the id (see `Course.fromNewCourse`), so
+  *  "updating an unsaved entity" is a compile error instead of a runtime exception.
+  */
+final case class NewCourse(
+    instructor: String,
+    title: String,
+    description: String,
+    enrollmentStartDate: LocalDate,
+    enrollmentEndDate: LocalDate,
+    mode: String,
+    price: Long,
+    objectives: String,
+    methology: String,
+    duration: Long,
+    language: String,
+    location: String,
+    status: CourseStatus
+)
+
+object NewCourse:
+  /** Validate that the enrollment date window is sane. */
+  def validDates(start: LocalDate, end: LocalDate): Boolean =
+    !start.isAfter(end)
+
+  /** Build a validated draft from a creation request (the id is assigned by the DB on `create`).
+    *  Returns None on invalid dates.
+    */
+  def fromRequest(
+      instructor: String,
+      title: String,
+      description: String,
+      enrollmentStartDate: LocalDate,
+      enrollmentEndDate: LocalDate,
+      mode: String,
+      price: Long,
+      objectives: String,
+      methology: String,
+      duration: Long,
+      language: String,
+      location: String
+  ): Option[NewCourse] =
+    if validDates(enrollmentStartDate, enrollmentEndDate) then
+      Some(
+        NewCourse(
+          instructor = instructor,
+          title = title,
+          description = description,
+          enrollmentStartDate = enrollmentStartDate,
+          enrollmentEndDate = enrollmentEndDate,
+          mode = mode,
+          price = price,
+          objectives = objectives,
+          methology = methology,
+          duration = duration,
+          language = language,
+          location = location,
+          status = CourseStatus.Draft
+        )
+      )
+    else None
+
+/** A persisted course. Immutable; state transitions are expressed via `copy`. */
 final case class Course(
-    id: Option[Long],
+    id: Long,
     instructor: String,
     title: String,
     description: String,
@@ -49,47 +111,27 @@ object Course:
   def validDates(start: LocalDate, end: LocalDate): Boolean =
     !start.isAfter(end)
 
-  /** Build a Course from a request: an unsaved draft (id is None until the DB assigns it).
-    *  Assumes the caller has already validated the request; returns None on invalid dates.
-    */
-  def fromRequest(
-      instructor: String,
-      title: String,
-      description: String,
-      enrollmentStartDate: LocalDate,
-      enrollmentEndDate: LocalDate,
-      mode: String,
-      price: Long,
-      objectives: String,
-      methology: String,
-      duration: Long,
-      language: String,
-      location: String
-  ): Option[Course] =
-    if validDates(enrollmentStartDate, enrollmentEndDate) then
-      Some(
-        Course(
-          id = None,
-          instructor = instructor,
-          title = title,
-          description = description,
-          enrollmentStartDate = enrollmentStartDate,
-          enrollmentEndDate = enrollmentEndDate,
-          mode = mode,
-          price = price,
-          objectives = objectives,
-          methology = methology,
-          duration = duration,
-          language = language,
-          location = location,
-          status = CourseStatus.Draft
-        )
-      )
-    else None
-/////////////////////////////////////////////////////////////////
-/** An enrollment of a student (email) in a course. */
-final case class Enrollment(
-    id: Option[Long],
+  /** Attach the DB-generated id to a validated draft. */
+  def fromNewCourse(id: Long, newCourse: NewCourse): Course =
+    Course(
+      id = id,
+      instructor = newCourse.instructor,
+      title = newCourse.title,
+      description = newCourse.description,
+      enrollmentStartDate = newCourse.enrollmentStartDate,
+      enrollmentEndDate = newCourse.enrollmentEndDate,
+      mode = newCourse.mode,
+      price = newCourse.price,
+      objectives = newCourse.objectives,
+      methology = newCourse.methology,
+      duration = newCourse.duration,
+      language = newCourse.language,
+      location = newCourse.location,
+      status = newCourse.status
+    )
+
+/** An unsaved enrollment draft: no `id` yet (the DB assigns one on `create`). */
+final case class NewEnrollment(
     student: String,
     enrollmentDate: LocalDate,
     qualification: Long,
@@ -97,10 +139,27 @@ final case class Enrollment(
     courseId: Long
 )
 
-// 1. Immutability: Case classes are designed to be immutable data structures. By making them final, it ensures that their behavior cannot be altered through inheritance, which helps maintain their immutability guarantees.
-// 2. Pattern Matching: Case classes are commonly used in pattern matching. Making them final ensures that the pattern matching behavior is predictable and consistent, as there won't be any unexpected subclasses that could introduce new cases.
-// 3. Performance: Final classes can be optimized by the compiler, leading to better performance in certain scenarios. The compiler can make assumptions about the class hierarchy, which can lead to more efficient code generation.
-// 4. Simplicity: Declaring case classes as final simplifies the class hierarchy and reduces complexity, making it easier to reason about the code and its behavior.
+/** An enrollment of a student (email) in a course. */
+final case class Enrollment(
+    id: Long,
+    student: String,
+    enrollmentDate: LocalDate,
+    qualification: Long,
+    status: EnrollmentStatus,
+    courseId: Long
+)
+
+object Enrollment:
+  /** Attach the DB-generated id to a validated draft. */
+  def fromNewEnrollment(id: Long, newEnrollment: NewEnrollment): Enrollment =
+    Enrollment(
+      id = id,
+      student = newEnrollment.student,
+      enrollmentDate = newEnrollment.enrollmentDate,
+      qualification = newEnrollment.qualification,
+      status = newEnrollment.status,
+      courseId = newEnrollment.courseId
+    )
 
 /** Read-only user projection returned to callers. */
 final case class User(

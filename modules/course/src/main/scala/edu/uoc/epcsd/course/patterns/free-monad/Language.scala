@@ -22,9 +22,9 @@ enum CourseOp[A]:
   case FetchCourse(id: Long) extends CourseOp[Option[Course]]
   case FetchEnrollments(courseId: Long) extends CourseOp[List[Enrollment]]
   case FetchUser(email: String) extends CourseOp[Option[User]]
-  case PersistCourse(c: Course) extends CourseOp[Long]
+  case PersistCourse(c: NewCourse) extends CourseOp[Long]
   case UpdateCourse(c: Course) extends CourseOp[Unit]
-  case PersistEnrollment(e: Enrollment) extends CourseOp[Long]
+  case PersistEnrollment(e: NewEnrollment) extends CourseOp[Long]
   case PersistGradeClosure(c: Course, gradedEnrollments: List[Enrollment]) extends CourseOp[Unit]
   case PersistCourseClosure(c: Course, closedEnrollments: List[Enrollment]) extends CourseOp[Unit]
   case RequestMicrocredentials(courseId: Long) extends CourseOp[Either[CourseError, Unit]]
@@ -39,15 +39,13 @@ enum CourseOp[A]:
     case FetchEnrollments(courseId)      => s"GET courses/$courseId/enrollments"
     case FetchUser(email)                => s"GET users/$email"
     case PersistCourse(c)                => s"INSERT course '${c.title}'"
-    case UpdateCourse(c)                 => s"UPDATE course ${idOf(c)} -> ${c.status}"
+    case UpdateCourse(c)                 => s"UPDATE course ${c.id} -> ${c.status}"
     case PersistEnrollment(e)            => s"INSERT enrollment for ${e.student}"
-    case PersistGradeClosure(c, es)      => s"1 TXN: course ${idOf(c)} -> PENDING_CLOSURE, ${es.size} enrollments -> GRADED"
-    case PersistCourseClosure(c, es)     => s"1 TXN: course ${idOf(c)} -> CLOSED, ${es.size} enrollments -> CLOSED"
+    case PersistGradeClosure(c, es)      => s"1 TXN: course ${c.id} -> PENDING_CLOSURE, ${es.size} enrollments -> GRADED"
+    case PersistCourseClosure(c, es)     => s"1 TXN: course ${c.id} -> CLOSED, ${es.size} enrollments -> CLOSED"
     case RequestMicrocredentials(cid)    => s"POST microcredentials/$cid/create (idempotent)"
-    case PublishCourseClosed(c)          => s"ENQUEUE course.closed for course ${idOf(c)} (async)"
+    case PublishCourseClosed(c)          => s"ENQUEUE course.closed for course ${c.id} (async)"
     case Tick                            => "GET clock/now"
-
-  private def idOf(c: Course): String = c.id.fold("<unsaved>")(_.toString)
 
 object CourseOp:
   /** Every case carries the operation's already-decided result type, so `CourseOp` is

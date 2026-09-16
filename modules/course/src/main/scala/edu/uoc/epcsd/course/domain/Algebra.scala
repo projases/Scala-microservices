@@ -25,7 +25,9 @@ object Eff:
 trait CourseRepository[F[_]]:
   def getCourseById(courseId: Long): F[Option[Course]]
   def findCourses: F[List[Course]]
-  def createCourse(c: Course): F[Course]
+
+  /** Persist a draft and issue its `id` at this boundary. */
+  def createCourse(c: NewCourse): F[Course]
   def updateCourse(c: Course): F[Unit]
 
   /** Persist a grade-report closure atomically: mark the given enrollments Graded and the course
@@ -43,7 +45,9 @@ trait EnrollmentRepository[F[_]]:
   def findEnrollmentByCourse(courseId: Long): F[List[Enrollment]]
   def findEnrollmentByStudent(email: String): F[Option[Enrollment]]
   def getEnrollmentById(id: Long): F[Option[Enrollment]]
-  def createEnrollment(e: Enrollment): F[Enrollment]
+
+  /** Persist a draft and issue its `id` at this boundary. */
+  def createEnrollment(e: NewEnrollment): F[Enrollment]
   def updateEnrollment(e: Enrollment): F[Unit]
 
 /** External User service (REST), see infrastructure.user.UserClient. */
