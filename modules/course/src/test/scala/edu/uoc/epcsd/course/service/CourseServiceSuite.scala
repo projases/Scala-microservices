@@ -137,7 +137,7 @@ class CourseServiceSuite extends munit.CatsEffectSuite:
     val (repo, enrollRepo) = repos(store)
     val svc = service(repo, enrollRepo, Fakes.FakeUserService(List(instructor)))
     val req = CreateCourse(
-      "instra@uoc.edu", "FP", "desc",
+      "instr@uoc.edu", "FP", "desc",
       LocalDate.of(2026, 1, 1), LocalDate.of(2026, 6, 30),
       "Online", 100, "o", "m", 40, "en", "web"
     )
