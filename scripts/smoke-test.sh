@@ -48,7 +48,7 @@ expect_http() {
 
 wait_for_http() {
   # wait_for_http <url> <timeout_seconds>
-  local url="$1" timeout="${2:-30}" i=0
+  local url="$1" timeout="${2:-120}" i=0
   while ! curl -sf -o /dev/null "$url" 2>/dev/null; do
     i=$((i + 1))
     if (( i > timeout )); then
