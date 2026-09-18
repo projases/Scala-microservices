@@ -54,9 +54,7 @@ what follows says what is being changed next and why.
 - **Effect-encoding exploration.** Three side-by-side, teaching re-implementations of the
   course lifecycle in `patterns/effects-as-data/` (pure reducers + imperative shell),
   `patterns/free-monad/` (GADT vocabulary + `Free` programs + multiple interpreters) and
-  `patterns/free-applicative/` (static read fan-out + parallel `Applicative` folding). Kept
-  as comparison artifacts to deepen the functional-core / imperative-shell story — not a
-  replacement for the current tagless-final service. 
+  `patterns/free-applicative/` (static read fan-out + parallel `Applicative` folding). Kept as comparison artifacts to deepen the functional-core / imperative-shell story — not a replacement for the current tagless-final service. 
 
 ## Services
 
